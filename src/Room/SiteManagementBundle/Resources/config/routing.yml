@@ -1,0 +1,6 @@
+room_site_management_about_us:
+    path:     /about-us
+    defaults: { _controller: RoomSiteManagementBundle:SiteManagement:about }
+room_site_management_contact_us:
+    path:     /contact-us
+    defaults: { _controller: RoomSiteManagementBundle:SiteManagement:contact }

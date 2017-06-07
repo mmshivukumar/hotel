@@ -1,0 +1,20 @@
+parameters:
+     security.authentication.success_handler.class: Room\SecurityBundle\Controller\LoginSuccessHandler
+services:
+     room.registration.form.type:
+        class: Room\SecurityBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: room_registration }
+
+     security.authentication.customized_success_handler:
+          class: %security.authentication.success_handler.class%
+          arguments:  [@router, @security.context]
+          tags:
+            - { name: 'monolog.logger', channel: 'security' }
+#     fos_facebook.user.login:
+#        class:  Room\SecurityBundle\Controller\FacebookProvider
+#        arguments:
+#            facebook: "@fos_facebook.api"
+#            userManager: "@fos_user.user_manager"
+#            validator: "@validator"

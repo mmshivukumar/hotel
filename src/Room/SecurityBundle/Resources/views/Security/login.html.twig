@@ -1,0 +1,59 @@
+{% trans_default_domain 'FOSUserBundle' %}
+{% block javascripts %}
+{% endblock %}
+{% block body %}
+			
+		<div class="row">
+
+			  {% block fos_user_content %}
+				
+
+
+        </div>
+
+		<div class="row booking-price-details">
+            
+            
+		
+			  	
+			  <div class="col-lg-12 col-sm-12">
+                  
+
+ 				{% if error %}
+					<div class="row has-error"><ul class="help-block"><li>{{ error|trans }}</li></ul></div>
+				{% endif %}
+				
+				  <form action="{{ path("fos_user_security_check") }}" method="post" class="contactForm">
+					
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+						<div class="row form-group top-buffer2">
+						<input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="form-control" placeholder="Enter email address"/>
+						
+						</div>
+						<div class="row form-group">
+						<input type="password" id="password" name="_password" required="required" class="form-control" placeholder="Enter password" />
+						</div>
+						<div class="row form-group">
+                            <div class="col-lg-8">
+                                <input type="checkbox" id="remember_me" name="_remember_me" />
+						<label for="remember_me" class="control-label">{{ 'security.login.remember_me'|trans }}</label>
+						<br>
+						<a href="{{ path("fos_user_resetting_request") }}"  target="_blank" class="forgot">{% trans %}Forgot password ?{% endtrans %}</a>
+                            </div>
+                            <div class="col-lg-4 text-right">
+                            <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-primary" />
+                            </div>
+						
+						</div>
+				 </form>
+				{% endblock fos_user_content %}
+	                   
+				</div>
+				</div>
+
+
+{% endblock %}
+
+
+
+

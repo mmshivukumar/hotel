@@ -1,0 +1,21 @@
+room_booking_engine_homepage:
+    path:     /
+    defaults: { _controller: RoomBookingEngineBundle:Booking:index }
+room_booking_engine_search:
+    path:     /search
+    defaults: { _controller: RoomBookingEngineBundle:Booking:search }
+room_booking_engine_view_more:
+    path:     /view-more/{id}
+    defaults: { _controller: RoomBookingEngineBundle:Booking:viewMore }
+room_booking_engine_confrim:
+    path:     /confirm
+    defaults: { _controller: RoomBookingEngineBundle:Booking:confirm }
+room_booking_engine_booking:
+    path:     /booking
+    defaults: { _controller: RoomBookingEngineBundle:Booking:booking }
+room_booking_engine_booking_submit:
+    path:     /booking-submit
+    defaults: { _controller: RoomBookingEngineBundle:Booking:bookingSubmit }
+room_booking_engine_success:
+    path:     /booking-success
+    defaults: { _controller: RoomBookingEngineBundle:Booking:success }

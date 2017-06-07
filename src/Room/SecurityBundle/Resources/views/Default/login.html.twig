@@ -1,0 +1,98 @@
+
+
+{% trans_default_domain 'FOSUserBundle' %}
+{% extends '::page.html.twig' %}
+ 
+{% block title %}LogIn Register{% endblock %}
+
+
+
+
+{% block body %}
+
+    <section class="section clearfix">
+				<div class="container">
+					<div class="row sidebar-page">
+					<div class="col-md-9 page-content">
+						<div class="col-md-1">
+						</div>
+						<div class="col-md-4 page-content">
+						
+						
+							
+							<div id="login" class="login">
+							<div class="row">
+							<div class="hotel-title">
+							                <h5 class="classic-title"><span>{% trans %}Login{% endtrans %}</span></h5>
+							            </div>
+							</div>
+							
+							{% if app.session.get('loginfail')| length > 0 %}
+								{% include "FOSUserBundle:Security:login.html.twig" %}
+							{% else %}
+									{{ render(controller('FOSUserBundle:Security:login')) }}			
+							{% endif %} 
+							 
+							</div>
+						</div>
+						<div class="col-md-2 verticalLine">
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+							<div class="row top-buffer3"></div>
+						</div>
+						<div class="col-md-4 page-content">
+							<div id="reg" class="reg">
+							{% if app.session.get('regFail')| length > 0 %}
+									{% include "FOSUserBundle:Registration:register.html.twig" %}
+							{% else %}
+									 {{ render(controller('FOSUserBundle:Registration:register')) }} 			
+							{% endif %} 
+							 
+							</div>
+						</div>
+						
+					</div>
+					
+					</div>
+				</div>
+       
+</section>
+
+{% endblock %}
+
+
+
+

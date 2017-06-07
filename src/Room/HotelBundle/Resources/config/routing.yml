@@ -1,0 +1,3 @@
+room_hotel_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: RoomHotelBundle:Default:index }

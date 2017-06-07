@@ -1,0 +1,284 @@
+{% extends 'page.html.twig' %}
+
+
+{% block stylesheets %}
+<link href="{{ asset('css/jquery.timepicker.css') }}" rel="stylesheet" media="screen">
+<link type="text/css" rel="stylesheet" href="{{ asset('css/lightGallery.min.css') }}" /> 
+<link type="text/css" rel="stylesheet" href="{{ asset('css/lightslider.css') }}" /> 
+ 
+{% endblock %}
+{% block javascripts %} 
+ <script src="{{ asset('js/lightgallery-all.min.js') }}"></script>
+ <script src="{{ asset('js/lightslider.js') }}"></script> 
+
+<script>
+$(document).ready(function() {
+   // $("#view-package-slider").lightSlider(); 
+
+    $('#view-room-slider').lightSlider({
+        gallery:true,
+        item:1,
+        loop:true,
+        slideMargin:0,
+        enableDrag: false,
+        currentPagerPosition:'left',
+        onSliderLoad: function(el) {
+            el.lightGallery({
+                selector: '#view-package-slider .lslide'
+            });
+        }   
+    });  
+  });
+</script>
+{% endblock %}
+
+
+{# {% block breadcrumbsTitle %}{{ hotel.name }}{% endblock %}#}
+
+{# {% block breadcrumbsLinks %}#}
+{#             <li><a href="{{ path('room_booking_engine_homepage') }}">Home</a></li>#}
+{#             <li><a href="#">{{ hotel.name }}</a></li>#}
+{# {% endblock %}#}
+
+{% block body %}
+
+
+
+  <section id="room">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          
+            <div class="col-md-9">
+            <h1 class="hotel-title">{{ hotel.name }}</h1>           
+			{% set address = hotel.address %}
+			<p class="hotel-address"> {{ address.addressLine1 }}, {{ address.addressLine2 }}, {{ address.location }}, {{ address.city }}</p>
+            </div>
+           <div class="col-md-3">
+            	 <h5 class="hotel-price"> <i class="fa fa-inr"></i> {{ hotel.price }}</h5>
+            	 <a class="btn-book-now" href="{{ path('room_booking_engine_confrim',{ 'id' : hotel.id }) }}"> Book Now </a>
+            </div>
+            <div class="room-wrapper negative-margin">
+             <div class="room-content col-md-9">
+              <div class="room-general">
+              
+              {% if hotel.images|length>0 %}			    
+			    <ul id="view-room-slider">
+{% for image in hotel.images %}
+		<li data-thumb="{{ asset('img/Hotels/'~image.imagePath) }}" data-src="{{ asset('img/Hotels/'~image.imagePath) }}">
+		    <img src="{{ asset('img/Hotels/'~image.imagePath) }}" />
+		</li>
+	{% endfor %}
+</ul>
+			    
+			    	{% else %}
+			    	 <img src="{{ asset('img/room-1.jpg') }}" alt="" class="img-responsive">
+			    	 
+			    	 {% endif %}
+               
+              </div>
+               <div class="room-tabs">
+               <div id="amenities">
+               <h5 class="room-title">Amenities</h5>
+               <span class="room-title-border"></span>
+                    <div class="listing-facitilities">
+                      <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                          <ul class="facilities-list custom-list">
+                            <li><i class="fa fa-leaf"></i> <span>AC</span></li>
+                            <li><i class="fa fa-heart-o"></i> <span>Hotbath</span></li>
+                            <li><i class="fa fa-car"></i> <span>Parking</span></li>
+                          </ul>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                          <ul class="facilities-list custom-list">
+                            <li><i class="fa fa-female"></i> <span>Room service</span></li>
+                            <li><i class="fa fa-key"></i> <span>Free safe</span></li>
+                            <li><i class="fa fa-desktop"></i> <span>TV & Audio</span></li>
+                          </ul>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                          <ul class="facilities-list custom-list">
+                            <li><i class="fa fa-wifi"></i> <span>WIFI access</span></li>
+                            <li><i class="fa fa-clock-o"></i> <span>24/7 Service</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="room-about">
+                <h5 class="room-title">About</h5>
+                 <span class="room-title-border"></span>
+                <p>{{ hotel.overview }}</p>
+              </div>
+             
+              <div class="room-about">
+                <h5 class="room-title">Hotel Policies</h5>
+                  <span class="room-title-border"></span>
+                <ul>
+                <li>The primary guest must be at least 18 years of age to check into this hotel(s).</li>
+                 <li>As per Indian Government regulations, It is mandatory for all guests
+above 18 years of age to carry a valid photo identity card & address proof
+at the time of check-in. In case, check-in is denied by the hotel(s) due
+to lack of required documents, you cannot claim for the refund & the
+booking will be considered as NO SHOW.</li>
+                  <li>Unless mentioned, the tariff does not include charges for optional room
+services (such as telephone calls, room service, mini bar, snacks, laundry
+extra bed etc.). In case, such additional charges are levied by the
+hotel(s), we shall not be held responsible for it.</li>
+                   <li>Extra bed can be accommodated with a folding cot or a mattress, subject
+to room size & availability.</li>
+<li>The hotel(s) reserves the right to decline accommodation to
+localities/same city residents. Sterlingsuites.in will not be responsible
+for any check-in declined by the hotel(s) or any refunds due to the above
+mentioned reason</li>
+<li>The hotelier may charge your Card/Account for additional cancellation
+charges, if any.</li>
+<li>All hotel(s) charge a compulsory Dinner Supplement on Christmas and New
+Year's eve. Other special supplements may also be applicable during
+festival periods such as Dusshera, Diwali etc. Any such charge would have
+to be cleared directly at the hotel(s).</li>
+<li> In case of an increase in the hotel(s) tariff (due to an event or
+festive occasion) the customer is liable to pay the difference, if the
+period of stay falls within this duration.</li>
+<li>  Local ID proof & Pan card will not be acceptable as ID proof.</li>
+<li>Sterlingsuites.in will not be responsible for any service issues at the
+hotel(s).</li>
+<li> For Day Use booking, extension of stay beyond the time slots booked will
+levy additional charges. Any stay post 7 PM will be charged as full night
+stay.</li>
+                </ul>
+              </div>
+              <div class="room-about faq-content">
+                <h5 class="room-title">FAQ's</h5>
+                  <span class="room-title-border"></span>
+                <h4 class="faq-title">How do I know my reservation was booked?</h4>
+                <p>You will receive an SMS and email on confirmation of your hotel(s) booking.</p>
+                <h4 class="faq-title">Do I need to confirm my reservation?</h4>
+                <p>There is no need to confirm your reservation. If you still feel you would
+like to verify that your reservation was made, you can do so by writing to
+our Customer Support Team or by contacting our customer services team.</p>
+<h4 class="faq-title">How do I cancel/amend a hotel(s) reservation?</h4>
+<p>To cancel a booking log in to My Bookings section or call our call center
+on +91-9900032872(all networks). To amend a booking call our call center
+on +91-9900032872 (all networks).</p>
+<h4 class="faq-title">Is there a cancellation policy for hotel(s) booked on Sterlingsuites.in?</h4>
+<p>The cancellation policy for hotel(s) bookings varies according to hotel(s)
+and room type. For more information, please check the cancellation policy
+mentioned next to the price for the room type. If you are cancelling after
+the check-in date, there will be no refund. In all cases, you'll be
+charged a standard cancellation fee of Rs. 250 per booking over and above
+the hotel(s)'s own cancellation charges.</p>
+<h4 class="faq-title">How do I pay for the gala dinner?</h4>
+<p>Gala dinner charges which are applicable for Christmas and New Year dates
+would be extra and payable directly to the hotel(s). Please check with the
+hotel(s) directly for more information on the same.</p>
+              </div>
+              <div class="room-related">
+                <h5 class="room-title">Related Offers</h5>
+                 
+                <div class="col-md-4">
+                  <div class="listing-room-grid">
+                    <div class="thumbnail">
+                      <img src="{{ asset('img/1bhk.jpg') }}" alt="" class="img-responsive">
+                    </div>
+                    <div class="listing-room-content">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <header>
+                            <h5 class="title">
+                              <a href="#">{{ hotel.name }}</a>
+                            </h5>
+                          
+                          </header>
+                          <span class="price">
+                            from <i class="fa fa-inr"></i> 2499 /day
+                          </span>
+                          <button class="btn btn-transparent-gray">
+                            Read More
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="listing-room-grid">
+                    <div class="thumbnail">
+                      <img src="{{ asset('img/Restaurent.jpg') }}" alt="" class="img-responsive">
+                    </div>
+                    <div class="listing-room-content">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <header>
+                            <h5 class="title">
+                              <a href="#">King Suite</a>
+                            </h5>
+                           
+                          </header>
+                          <span class="price">
+                            from <i class="fa fa-inr"></i> 1999/day
+                          </span>
+                          <button class="btn btn-transparent-gray">
+                            Read More
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="listing-room-grid">
+                    <div class="thumbnail">
+                      <img src="{{ asset('img/2BHK.jpg') }}" alt="" class="img-responsive">
+                    </div>
+                    <div class="listing-room-content">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <header>
+                            <h5 class="title">
+                              <a href="#">King Suite</a>
+                            </h5>
+                            
+                          </header>
+                          <span class="price">
+                            from <i class="fa fa-inr"></i> 1599/day
+                          </span>
+                          <button class="btn btn-transparent-gray">
+                            Read More
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+             <div class="sidebar col-md-3">             
+              <div class="sidebar-widget book-now">
+               <h4 class="widget-title">Help Me</h4>
+                <div class="widget-content">
+                  <ul class="contact-list custom-list">
+                    <li><i class="fa fa-phone"></i><span>+ 91 98801 12360</span></li>
+                    <li><i class="fa fa-phone"></i><span>+ 91 9900032872 / 73</span></li>
+                    <li><i class="fa fa-envelope-o"></i><span>reservation@sterlingsuites.in</span></li>
+                    <br>
+                     <li><i class="fa fa-clock-o"></i> <label>Check-In:</label> <span>{{ hotel.checkIn }}</span></li>
+                     <li><i class="fa fa-clock-o"></i> <label>Check-Out:</label> <span>{{ hotel.checkOut }}</span></li>
+                  </ul>
+                </div>
+              </div>
+             
+            </div>
+            
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Room -->
+
+{% endblock %}

@@ -1,0 +1,310 @@
+{% extends 'page.html.twig' %}
+
+{# {% block breadcrumbsTitle %}Search Rooms{% endblock %}#}
+
+{# {% block breadcrumbsLinks %}#}
+{#             <li><a href="{{ path('room_booking_engine_homepage') }}">Home</a></li>#}
+{#             <li><a href="#">Search</a></li>#}
+{# {% endblock %}#}
+
+{% block body %}
+
+ <section id="listing">
+    <div class="container">
+      <div class="row">
+        <div class="sidebar col-md-3">
+          <div class="fleets-filters toggle-container">
+            <h5 class="toggle-title">Filters</h5>
+            <aside class="toggle-content">
+              <div class="general">
+                <h5 class="title">Location</h5>
+                <ul class="custom-list additional-filter-list clearfix">
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-ac"  type="checkbox">
+                      <label for="additional-filter-ac">BTM</label>
+                    </span>
+                  </li> 
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-hotbath"  type="checkbox">
+                      <label for="additional-filter-hotbath">Marathahalli</label>
+                    </span>
+                  </li> 
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-parking" type="checkbox">
+                      <label for="additional-filter-parking">HSR</label>
+                    </span>
+                  </li> 
+                   <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-ac"  type="checkbox">
+                      <label for="additional-filter-ac">MG Road</label>
+                    </span>
+                  </li> 
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-hotbath"  type="checkbox">
+                      <label for="additional-filter-hotbath">Whitefield</label>
+                    </span>
+                  </li> 
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-parking" type="checkbox">
+                      <label for="additional-filter-parking">ITPL</label>
+                    </span>
+                  </li> 
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-parking" type="checkbox">
+                      <label for="additional-filter-parking">Koramangala</label>
+                    </span>
+                  </li> 
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-parking" type="checkbox">
+                      <label for="additional-filter-parking">Indra Nagar</label>
+                    </span>
+                  </li> 
+                 
+                </ul>
+                 <hr class="filter-divider">
+                 <h5 class="title">Include Nearby Area</h5>
+                <ul class="custom-list additional-filter-list clearfix">
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-ac"  type="checkbox">
+                      <label for="additional-filter-ac">Central Bangalore</label>
+                    </span>
+                  </li> 
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-hotbath"  type="checkbox">
+                      <label for="additional-filter-hotbath">East Bangalore</label>
+                    </span>
+                  </li> 
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-parking" type="checkbox">
+                      <label for="additional-filter-parking">North Bangalore</label>
+                    </span>
+                  </li> 
+                   <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-parking" type="checkbox">
+                      <label for="additional-filter-parking">South Bangalore</label>
+                    </span>
+                  </li> 
+                   <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-parking" type="checkbox">
+                      <label for="additional-filter-parking">West Bangalore</label>
+                    </span>
+                  </li> 
+                 
+                </ul>
+                <hr class="filter-divider">
+                <h5 class="title">Price</h5>
+                <div class="slider-range-container box-row">
+                  <div class="slider-range" data-min="2000" data-max="100000" data-step="2000" data-default-min="2000" data-default-max="50000" data-currency="$">
+                  </div>
+                  <div class="clearfix">
+                    <input type="text" class="range-from" value="$2000">
+                    <input type="text" class="range-to" value="$50000">
+                  </div>
+                </div>
+                 <hr class="filter-divider">
+                <h5 class="title">Amenities</h5>
+                <ul class="custom-list additional-filter-list clearfix">
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-ac"  type="checkbox">
+                      <label for="additional-filter-ac">AC</label>
+                    </span>
+                  </li> 
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-hotbath"  type="checkbox">
+                      <label for="additional-filter-hotbath">Hotbath</label>
+                    </span>
+                  </li> 
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-parking" type="checkbox">
+                      <label for="additional-filter-parking">Parking</label>
+                    </span>
+                  </li> 
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-room-service" type="checkbox">
+                      <label for="additional-filter-room-service">Room Service</label>
+                    </span>
+                  </li> 
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-safe"  type="checkbox">
+                      <label for="additional-filter-safe">Safe</label>
+                    </span>
+                  </li> 
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-tv"  type="checkbox">
+                      <label for="additional-filter-tv">TV</label>
+                    </span>
+                  </li> 
+                  <li>
+                    <span class="checkbox-input active">
+                      <input id="additional-filter-wifi"  type="checkbox">
+                      <label for="additional-filter-wifi">Wifi</label>
+                    </span>
+                  </li> 
+                </ul>
+                 <hr class="filter-divider">
+                <h5 class="title">Category</h5>
+                <ul class="custom-list additional-filter-list clearfix">
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-ac"  type="checkbox">
+                      <label for="additional-filter-ac">5 Star</label>
+                    </span>
+                  </li> 
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-hotbath"  type="checkbox">
+                      <label for="additional-filter-hotbath">3 Star</label>
+                    </span>
+                  </li> 
+                  <li>
+                    <span class="checkbox-input">
+                      <input id="additional-filter-parking" type="checkbox">
+                      <label for="additional-filter-parking">2 Star</label>
+                    </span>
+                  </li> 
+                 
+                </ul>
+              </div>
+{#               <div class="buttons">#}
+{#                 <button class="btn btn-transparent-gray pull-left">#}
+{#                   Filter#}
+{#                 </button>#}
+{#                 <button class="btn btn-transparent-gray pull-right">#}
+{#                   Reset#}
+{#                 </button>#}
+{#               </div>#}
+            </aside>
+          </div>
+{#           <div class="special-offers sidebar">#}
+{#             <h5 class="title-section">Special Offers</h5>#}
+{#             <div class="offers-content">#}
+{#               <ul class="custom-list">#}
+{#                 <li>#}
+{#                   <div class="thumbnail"><img src="img/listing-1.jpg" alt="" class="img-responsive"></div>#}
+{#                   <h5 class="title"><a href="#">King Suite</a></h5>#}
+{#                   <span class="price">from $99/day</span>#}
+{#                 </li>#}
+{#                 <li>#}
+{#                   <div class="thumbnail"><img src="img/listing-1.jpg" alt="" class="img-responsive"></div>#}
+{#                   <h5 class="title"><a href="">King Suite</a></h5>#}
+{#                   <span class="price">from $99/day</span>#}
+{#                 </li>#}
+{#                 <li>#}
+{#                   <div class="thumbnail"><img src="img/listing-1.jpg" alt="" class="img-responsive"></div>#}
+{#                   <h5 class="title"><a href="">King Suite</a></h5>#}
+{#                   <span class="price">from $99/day</span>#}
+{#                 </li>#}
+{#               </ul>#}
+{#             </div>#}
+{#           </div>#}
+        </div>
+        <div class="listing-content col-md-9">
+          <div class="listing-pagination">
+            <h5 class="title pull-left">Available Rooms</h5>
+{#             <span class="adults select-box pull-right">#}
+{#               <select name="perpage" data-placeholder="9 Per Page">#}
+{#                 <option>Per Page</option>#}
+{#                 <option value="1">10 Per Page</option>#}
+{#                 <option value="2">11 Per Page</option>#}
+{#                 <option value="3">12 Per Page</option>#}
+{#                 <option value="4">13 Per Page</option>#}
+{#               </select>#}
+{#             </span>#}
+{#             <ul class="pagination custom-list list-inline pull-right">#}
+{#               <li class="prev"><a href="#">Prev</a></li>#}
+{#               <li class="number"><a href="#">1</a></li>#}
+{#               <li class="number"><a href="#">2</a></li>#}
+{#               <li class="number"><a href="#">3</a></li>#}
+{#               <li class="next"><a href="#">Next</a></li>#}
+{#             </ul>#}
+          </div>
+          {% for hotel in hotels %}
+          <div class="listing-room-list">
+            <div class="thumbnail">
+            <img src="{{ asset('img/Hotels/'~hotel.images.first.imagePath) }}" alt="" class="img-responsive" height="100%">
+              
+            </div>
+            <div class="listing-room-content">
+              <div class="row">
+                <div class="col-md-12">
+                  <header>
+                    <div class="pull-left">
+                      <h5 class="title">
+                        <a href="{{ path('room_booking_engine_view_more',{ 'id' : hotel.id }) }}">{{ hotel.name }}</a>
+                      </h5>
+                      <ul class="tags custom-list list-inline pull-left">
+                      {% set address = hotel.address %}
+                        <li class="location"><i class="fa fa-map-marker"></i> {{ address.location }}, {{ address.city }}</li>
+                       
+                      </ul>
+                    </div>
+                    <div class="pull-right">
+                      <span class="price">
+                        <i class="fa fa-inr"></i> {{ hotel.price }}
+                      </span>
+                    </div>
+                  </header>
+                  <div class="listing-facitilities">
+                    <div class="row">
+                      <div class="col-md-3 col-sm-3">
+                        <ul class="facilities-list custom-list">
+                           <li><i class="fa fa-wifi"></i><span> Free WiFi</span></li>
+                        </ul>
+                      </div>
+                      
+                      <div class="col-md-3 col-sm-3">
+                        <ul class="facilities-list custom-list">                         
+                          <li><i class="fa fa-cutlery"></i><span> Free Break Fast</span></li>
+                        </ul>
+                      </div>
+                      <div class="col-md-3 col-sm-3">
+                        <ul class="facilities-list custom-list">
+                          <li><i class="fa fa-female"></i><span> Room service</span></li>
+                         
+                        </ul>
+                      </div>
+                      <div class="col-md-3 col-sm-3">
+                       {#} <a class="btn btn-transparent-gray" href="{{ path('room_booking_engine_view_more',{ 'id' : hotel.id }) }}">
+                          More Details
+                        </a> {#}
+                        <a class="btn btn-book-now" href="{{ path('room_booking_engine_view_more',{ 'id' : hotel.id }) }}">
+                          Book now
+                        </a>
+                       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}                    
+          
+          
+
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+
+<div id="reset_area">
+
+ <script>
+ $(document).ready(function(){
+	 
+	  $("#cancel").click(function(e){
+		  e.preventDefault();
+	   window.close();
+	  });
+	});
+
+</script>
+ {% block body %}
+<!-- Container -->
+
+
+    <section class="section clearfix">
+		<!-- End Page Banner -->
+<!-- Start Content -->
+		<div id="content">
+			<div class="container">
+				<div class="row sidebar-page">
+					
+					
+					<!-- Page Content -->
+					<div class="col-md-9 page-content">
+ <div class="modal-dialog">
+        <div class="modal-content">
+			<div class="modal-header">
+            
+                 <h4 class="modal-title">Please tell us your Email Id</h4>
+            </div>            <!-- /modal-header -->
+			<form id="reset" action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+            <div class="modal-body">
+          
+			
+				<div>
+					{% if invalid_username is defined %}
+						<p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
+					{% endif %}
+					<label for="username">Email-Id</label>
+					<input type="text" id="username" name="username" required="required" />
+				</div>
+			
+            </div>            <!-- /modal-body -->
+            <div class="modal-footer">
+                <a href="#" class="btn-system btn-medium" id="cancel">Cancel</a>
+				<input type="submit" class="btn-system btn-medium" value="{{ 'resetting.request.submit'|trans }}" />
+                
+            </div>            <!-- /modal-footer -->
+
+			</form>
+		
+		
+        </div> <!-- /.modal-content -->
+ </div> <!-- /.modal-dialog -->
+
+</div>
+</div>
+</div>
+</div>
+    </section>
+{% endblock %}

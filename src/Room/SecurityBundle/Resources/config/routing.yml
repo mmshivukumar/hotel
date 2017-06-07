@@ -1,0 +1,3 @@
+room_security_user_login:
+    path:     /user-login
+    defaults: { _controller: RoomSecurityBundle:Login:login }

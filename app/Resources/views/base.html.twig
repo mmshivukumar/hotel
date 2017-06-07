@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>{% block title %}Sterling Suites{% endblock %}</title>
+  <link rel="icon" type="image/x-icon" href="{{ asset('img/logo.png') }}" />
+
+  <!-- Stylesheets -->
+   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link href="{{ asset('css/jquery-ui.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('css/style.css?version=0.03') }}">
+  <link rel="stylesheet" href="{{ asset('css/owl.carousel.css') }}">
+
+  <!-- Google Font -->
+  <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400italic' rel='stylesheet' type='text/css'>
+  
+   
+{% block stylesheets %}{% endblock %}
+  <!--[if IE 9]>
+    <script src="{{ asset('js/media.match.min.js') }}"></script>
+  <![endif]-->
+  
+
+  
+</head>
+
+<body>
+
+<!-- Start Main-Wrapper -->
+<div id="main-wrapper">
+  
+ <!-- Start Header -->
+  <header id="header">
+   
+    <div class="header-navi">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12" id="bs-example-navbar-collapse-1">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="logo pull-left">
+                  <a href="{{ path('room_booking_engine_homepage') }}"><img src="{{ asset('img/logo.png') }}" alt=""></a>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-7 pull-right">
+            <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-9 hidden-xs">
+            <ul class="contact-info custom-list list-inline">
+              <li><i class="fa fa-phone"></i><span>+91 98801 12360  |  + 91 9900032872 / 73</span></li>
+              <li><i class="fa fa-envelope"></i><span>reservation@sterlingsuites.in</span></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-right pull-right">
+            <div class="contact-right">
+              <ul class="social custom-list list-inline">
+                <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
+              </ul>
+              <div class="header-login">
+               
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}  
+                 <li><a href="{{ path('fos_user_security_logout') }}"><b><i class="fa fa-power-off"></i> Logout</b></a> </li>
+				{% else %}
+                  <li><a href="{{ path('room_security_user_login')}}"> <i class="fa fa-power-off"></i> Login</a></li>
+               {% endif%}
+                <div class="header-form">
+                  <form action="index.html" class="default-form">
+                    <p class="alert-message warning"><i class="ico fa fa-exclamation-circle"></i> All fields are required! <i class="fa fa-times close"></i></p>
+                    <p class="form-row">
+                      <input class="required email" type="text" placeholder="Email">
+                    </p>
+                    <p class="form-row">
+                      <input class="required" type="password" placeholder="Password">
+                    </p>
+                    <p class="form-row">
+                      <button class="submit-btn button btn-blue"><i class="fa fa-power-off"></i> Login</button>
+                    </p>
+                    <p class="form-row forgot-password">
+                      <a href="#">Forgot Password?</a>
+                    </p>
+                    <p class="form-row register">
+                      <a href="#">Register</a>
+                    </p>
+                  </form>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+              </div>
+                <ul class="nav navbar-nav main-nav pull-right">
+                  <li class="active"><a href="{{ path('room_booking_engine_homepage') }}">Hotels</a></li>                                                     
+                  <li><a href="{{ path('room_site_management_about_us') }}">Service Apartments</a></li>
+                  <li><a href="#">Hot Deals</a></li>                
+                  <li><a href="{{ path('room_site_management_contact_us') }}">Contact</a></li>
+                   
+                </ul>
+                </div>
+                <i class="fa fa-bars toggleMenu"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- End Header -->
+  
+  {% block breadcrumbs %}{% endblock %}
+  {% block body %}{% endblock %}
+
+  
+
+  <!-- Start Footer -->
+  <footer id="footer">
+
+    <!-- Start Footer-Top -->
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 logo-footer">
+            <img src="{{ asset('img/logo.png') }}" alt="" class="img-responsive">
+          </div>
+          <div class="col-md-8 widget widget-about">
+            <h5 class="title">
+              About Us
+            </h5>
+            <p> Serviced Apartments and Hotels, is a professionally managed hospitality firm by a team of dedicated professionals from the construction industry who have been in the industry for more than 2 decades. </p>
+            <p>Each apartment / hotel has been individually and stylishly designed with very high standard to give you the comfort of a modern living with extra facilities like satellite channels, complimentary broadband, luxury linen and respite from frequent power outages.</p>
+          </div>
+         
+          <div class="col-md-4 widget widget-newsletter">
+           
+            <div class="social">
+              <h5 class="title">
+                Stay in touch
+              </h5>
+              <ul class="custom-list list-inline">
+                <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Footer-Top -->
+
+    <!-- Start Footer-Copyrights -->
+    <div class="footer-copyrights">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <p>Copyright 2015 © PetraHotel. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Footer-Copyrights -->
+
+  </footer>
+  <!-- End Footer -->
+
+</div>
+<!-- End Main-Wrapper -->
+
+
+<!-- Scripts -->
+<script src="{{ asset('js/jquery-2.1.4.min.js') }}"></script>
+<script defer="defer" src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
+<script src="{{ asset('js/gmap3.min.js') }}"></script>
+<script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('js/jquery-ui-1.10.4.custom.min.js') }}"></script>
+<script src="{{ asset('js/jquery.ba-outside-events.min.js') }}"></script>
+<script src="{{ asset('js/jqueryui.js') }}"></script>
+<script src="{{ asset('js/jquery.vide.min.js') }}"></script>
+<script src="{{ asset('js/tab.js') }}"></script>
+<script src="{{ asset('js/transition.js') }}"></script>
+<script src="{{ asset('js/jquery.matchHeight-min.js') }}"></script>
+<script src="{{ asset('js/scripts.js') }}"></script>
+
+{% block javascripts %}{% endblock %}
+</body>
+</html>
+

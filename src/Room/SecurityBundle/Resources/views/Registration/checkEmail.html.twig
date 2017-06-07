@@ -1,0 +1,32 @@
+{% extends '::base.html.twig' %}
+
+
+
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body %}
+<section class="section clearfix">
+	<!-- Container -->
+	<div id="container">
+
+			<div id="content">
+	 <div class="container">
+
+
+        <div class="row">
+
+
+
+            <div class="col-md-10 center msg">
+
+{% block fos_user_content %}
+    <p><label>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</label></p>
+{% endblock fos_user_content %}
+</div>
+	</div>
+</div>
+</div>
+</div>
+</section>
+{% endblock %}

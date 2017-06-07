@@ -1,0 +1,69 @@
+
+
+
+
+{% block body %}
+<section class="section clearfix">
+
+   <!-- Container -->
+	<div id="container">
+
+<!-- Start Content -->
+		
+			<div class="container">
+				<div class="row sidebar-page">
+					
+					
+					<!-- Page Content -->
+					<div class="col-md-9 page-content">
+        <div class="row top-buffer2">
+            <h4 class="classic-title"><span><b>{% trans %}Reset your password{% endtrans %}</b></span></h4>	
+            
+		</div>
+		<div class="row center">
+            <div class="col-md-4 col-sm-4">
+
+				{% trans_default_domain 'FOSUserBundle' %}
+				
+				<form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
+				    
+				    
+				    {{ form_widget(form._token) }}
+				    
+				    	<div class="row form-group {% if form.plainPassword.first.vars.errors|length %}has-error{% endif %}">
+							 <div class="row">
+								{{ form_label(form.plainPassword.first) }}
+							</div>
+							<div class="row">
+								{{ form_widget(form.plainPassword.first) }}
+							</div>
+							<div class="row">
+								{{ form_errors(form.plainPassword.first) }}
+							</div>
+						</div>
+						<div class="row form-group {% if form.plainPassword.second.vars.errors|length %}has-error{% endif %}">
+							 <div class="row top-buffer1">
+								{{ form_label(form.plainPassword.second) }}
+							</div>
+							<div class="row">
+								{{ form_widget(form.plainPassword.second) }}
+							</div>
+							<div class="row">
+								{{ form_errors(form.plainPassword.second) }}
+							</div>
+						</div>
+				    <div class="row bottom-buffer3">
+				        <input type="submit" value="{{ 'resetting.reset.submit'|trans }}" />
+				    </div>
+				</form>
+            </div>
+				
+	    </div>
+	</div>
+</div>
+</div>
+</div>
+
+</section>
+
+{% endblock %}

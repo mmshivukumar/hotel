@@ -1,0 +1,4 @@
+services:
+#    room_booking_engine.example:
+#        class: Room\BookingEngineBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

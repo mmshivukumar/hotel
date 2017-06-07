@@ -1,0 +1,4 @@
+services:
+    catalogue.service:
+        class: Room\SiteManagementBundle\DependencyInjection\CatalogueService
+        arguments: ["@doctrine.orm.entity_manager",'@service_container', @session]

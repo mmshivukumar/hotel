@@ -1,0 +1,435 @@
+{% extends 'page.html.twig' %}
+
+{# {% block breadcrumbsTitle %}Booking{% endblock %}#}
+
+{# {% block breadcrumbsLinks %}#}
+{#             <li><a href="{{ path('room_booking_engine_homepage') }}">Home</a></li>#}
+{#             <li><a href="#">Booking</a></li>#}
+{# {% endblock %}#}
+
+{% block stylesheets %}
+<style>
+.nav-justified>li {
+    display: inline-block;
+    width: 31%;
+    float: left;
+}
+.nav-justified>li:first-child>a{
+  text-align: left !important;
+}
+.nav-justified>li:last-child>a{
+  text-align: right !important;
+}
+
+.nav-justified>li:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    left: -50%;
+    top: 9px
+}
+.nav-justified>li:before {
+    content: '';
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    right: 0;
+    top: 9px
+}
+.nav-justified>li:first-child:before {
+    content: '';
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    right: -19px;
+    top: 9px
+}
+.nav-justified>li:last-child:before {
+    content: '';
+    width: 95%;
+    height: 2px;
+    position: absolute;
+    left: 0;
+    top: 9px
+}
+.list-group-item-heading {
+    margin-top: 8px!important;
+    font-size: initial !important;
+    text-transform: none !important;
+}
+.nav-justified>li:after,.nav-justified>li:before {
+    background: #000;
+    z-index: 1
+}
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:focus,
+.nav-pills>li.active>a:hover {
+    color: #000!important;
+    background: 0 0!important
+}
+.nav-pills>li.active span,
+.nav-pills>li.active span:focus,
+.nav-pills>li.active span:hover {
+    color: #FFF!important;
+    background: #429542!important
+}
+.nav-justified>li:first-child:after {
+    background: 0 0!important;
+    z-index: -1
+}
+.nav-justified>li a {
+    margin-top: -13px;
+    z-index: 100;
+    font-family: 'open sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+}   
+.box {
+    border: 1px solid #e4e4e4;
+    background: #fff;
+    border-radius: 3px;
+    margin: 0;
+    padding: 0;
+}
+.box-title{
+	background-color: #e2e2e2;
+    margin: 0;
+    padding: .3rem .7rem .4rem;
+   /*  font-size: 1.143rem; */
+   font-family: 'open sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    text-transform: capitalize;
+}
+
+.box>.box-content {
+    padding: .7rem;
+    margin: 0;
+}
+.hotel-title{
+    color: #EA2330;
+    text-transform: uppercase;
+    line-height: 1.5;
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+.check{
+	color: #888;
+    font-size: 12px;
+    text-transform: capitalize;
+    font-family: 'open sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    margin: 0;
+}
+.date-box {
+    border: 1px solid #e4e4e4;
+    background: #fff;
+    border-radius: 3px;
+    max-width: 91px;
+    text-align: center;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.date-box .date-day, .date-box .date-no, .date-box .date-time {
+   /*  font-size: .8571rem; */
+     margin: 0;
+}
+
+.date-box .date-day, .date-box .date-time {
+    background: #999;
+    color: #fff;
+}
+.date-box .date-no {
+    padding-bottom: 5px;
+}
+.box>.box-content p:last-child {
+    margin: 0;
+}
+
+.pax-details {
+    border-bottom: 1px solid #e4e4e4;
+    margin-bottom: 5px !important;
+    padding-bottom: 8px;
+     color: #888;
+     font-family: 'open sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.font-13{
+   /*  font-size: .9286rem; */
+    font-family: 'open sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+}
+.address h6,.address p{
+line-height: 1;
+    font-size: 14px;
+font-family: 'open sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    
+}
+.address h6{
+text-transform: capitalize;
+}
+.date-box .date-no span {
+    display: block;
+    font-size: 2rem;
+    line-height: 2.5rem;
+}
+.padding-top{
+	padding-top: 10px;
+}
+.room-type strong{
+	 font-family: 'open sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+	 line-height: 1;
+	     font-size: 14px;
+}
+.room-type{
+	margin: 0;
+	padding: 0;
+}
+.room-type span{
+	display: block;
+	font-family: 'open sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    color: #333;
+}
+
+.cancellation-policy{
+    margin-top: 20px;
+}
+.cancellation-policy a{
+	color: #666;
+    font-family: "Lato Regular";
+    line-height: 1.5;
+    text-transform: capitalize;
+}
+
+
+.price-list{
+    list-style: none;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding: 0;
+}
+
+
+
+.price-list.list-border>li {
+    border-top: 1px solid #e4e4e4;
+    padding: 0.5rem 0;
+    display: block;
+    font-family: 'open sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.price-list.list-border>li em{
+	font-style: normal;
+}
+.price-list>li:after {
+    clear: both;
+}
+.price-list>li:before, .price-list>li:after {
+    content: " ";
+    display: table;
+}
+.price-list.list-border>li:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+.final-price{
+    display: block;
+    color: #333;
+  font-size: 3.143rem;
+  font-family: 'open sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.you-pay{
+    font-size: 2rem;
+    display: block;
+    font-family: 'open sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.btn-continue{
+	margin: 10px;
+	background: #EA2330;
+}
+.make-margin{
+	margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+</style>
+{% endblock %}
+
+{% block body %}
+
+
+
+  <section id="room">
+    <div class="container">
+    
+    
+    
+     <!-- START CONTENT -->
+                    <div class="row">
+                    
+                        <div id="content" class="col-md-12 col-sm-12 col-xs-12">
+ <h6><span>{{ hotel.name }}</span> {{ search.checkIn|date('D jS M') }} - {{ search.checkOut|date('D jS M') }}</h6>
+                            <div class="price-range text-center clearfix row">
+                                <div class="col-md-12">
+									<ul class="nav nav-pills nav-justified setup-panel">
+									<li class="disabled {% if step=='review' %}active{% endif %}"><a href="#review">
+										<span class="badge">1</span>
+										<h4 class="list-group-item-heading">Review</h4>
+									   
+									</a></li>
+									<li class="disabled {% if step=='personal' %}active{% endif %}"><a href="#personal">
+										<span class="badge">2</span>
+										 <h4 class="list-group-item-heading">Personal</h4>
+									</a></li>
+                                       
+									<li class="disabled {% if step=='payment' %}active{% endif %}"><a href="#payment">
+										<span class="badge">3</span>
+										 <h4 class="list-group-item-heading">Payment</h4>
+									</a></li>
+									</ul>
+                                  {#}  <img src="{{ asset('images/progress.png') }}" class="img-responsive" alt=""> {#}
+                                </div><!-- end price-range -->
+                            </div><!-- end price-range -->
+
+                            <div class="clearfix"></div>
+								<div class="row">
+                                    <div class="col-sm-9">
+                                    <div class="col-sm-12 booking-price-details-border booking-details box clearfix">
+									<h5 class="box-title">Review Your Booking</h5>
+                                       
+                                        <div class="box-content row">
+                                         <h6 class="hotel-title"><span>{{ hotel.name }}</span></h6>
+											<div class="col-sm-6 text-center">
+											<div class="col-sm-4 text-center">
+											<h5 class="check">Check -in</h5>
+											<div class="date-box">
+												<p class="date-day">{{ search.checkIn|date('D') }}</p>
+												<p class="date-no"><span class="ng-binding">{{ search.checkIn|date('j') }}</span> {{ search.checkIn|date('M') }}</p>
+												<p class="date-time">12:00 PM</p>
+											</div>
+												{#}	{{ search.checkIn|date('F jS Y') }} {#}
+											</div>
+											<div class="col-sm-4 text-center">
+														-
+											</div>
+											<div class="col-sm-4 text-center">
+											<h5  class="check">Check Out</h5>
+											<div class="date-box">
+												<p class="date-day">{{ search.checkOut|date('D') }}</p>
+												<p class="date-no"><span class="ng-binding">{{ search.checkOut|date('j') }}</span> {{ search.checkOut|date('M') }}</p>
+												<p class="date-time">12:00 PM</p>
+											</div>
+											{#}	{{ search.checkOut|date('F jS Y') }} {#}
+											</div>
+											</div>
+											<div class="col-sm-6">
+												<p class="pax-details ">{{ search.numAdult }} Adult in 1 Room </p>
+												<div class="col-sm-12 font-13 address">
+												{% set address = hotel.address %}
+													<h6 class="font-13">Address :</h6>
+													<p> {{ address.addressLine1 }}, {{ address.addressLine2 }}</p>
+													<p>{{ address.location }}, {{ address.city }}</p>
+												</div>
+											</div>
+											<div class="col-sm-12 padding-top">
+											<p class="room-type"> <strong>Room Type:</strong> Executive Suit</p>
+											<p class="room-type"> <strong>Inclusions:</strong> 
+											<span>-Breakfast</span>
+											<span>-Wi-Fi Internet</span>
+											</p>
+											{#}
+											<div class="cancellation-policy">
+											  <a href="#">Booking & Cancellation Policy</a>
+											</div>
+											{#}
+											</div>
+											
+										    
+										</div>
+									</div>
+                                    
+                                    
+                                {% block form %}
+                                <div class="col-sm-12 booking-price-details-border price-details clearfix">
+                                   
+                                       
+                                                
+         
+         	            			<div class="row">         
+         	            			<div class="col-md-4 col-sm-4 col-xs-12 text-center">
+         	            			</div>                                               
+                                           <div class="col-md-4 col-sm-4 col-xs-12 text-center">
+                                           <form action="{{ path('room_booking_engine_booking') }}">
+                                           <input type="hidden" name="id" value="{{ hotel.id }}">
+                                                <button type="submit" class="btn btn-primary btn-block btn-sm btn-continue"> Continue</button>
+                                                </form>
+                                            </div>
+                                            <div class="col-md-4 col-sm-4 col-xs-12 text-center">
+                                            </div>
+                                    </div>
+         
+
+                                    	
+                                    </div>
+                                    {% endblock %}
+                                  </div>  
+                                    
+                                <div class="col-sm-3">
+                                <div class="booking-price-details-border price-details box clearfix">
+                                 <h5 class="box-title">Fare Details</h5>
+                                <div class="box-content row">
+                                                                              
+                                                <ul class="price-list list-border">                                                 
+                                                    <li>
+                                                        <span class="pull-left">Hotel Charges</span>
+                                                        <span class="pull-right"> <i class="fa fa-inr"></i> <em > {{ booking.totalPrice }}</em></span>
+                                                        
+                                                    </li>
+                                                     <li>
+                                                        <span class="pull-left">Hotel Taxes</span>
+                                                        <span  class="pull-right"> <i class="fa fa-inr"></i> <em > {{ booking.serviceTax }} </em></span>
+                                                        
+                                                    </li>  
+                                                     <li>
+                                                        <span class="pull-left">Convenience Fee & Taxes</span>
+                                                        <span  class="pull-right"> <i class="fa fa-inr"></i> <em > 150 </em></span>
+                                                        
+                                                    </li>                            
+                                                   
+                                                    <li><span  class="pull-left">Discount(-)</span>
+                                                        <span  class="pull-right"><i class="fa fa-inr"></i> <em id="discount"> 0 </em></span>
+                                                    </li>
+                                                   
+                                                    {% block details %}
+                                                    <li class="text-right"><span class="you-pay">You Pay</span>
+                                                        <span class="final-price"><i class="fa fa-inr"></i><em id="price"> {{ booking.finalPrice }} </em></span> 
+                                                    </li>
+                                                    {% endblock %}
+                                                    
+                                                </ul>                                          
+                             
+
+
+                                </div><!-- end box-content -->
+                            </div><!-- end pricing-details -->
+                                    </div>
+                                    
+                                    
+								
+
+
+                                    
+                                </div><!-- end row -->
+                           
+                        </div><!-- end col -->
+                    </div><!-- end row -->
+                    <!-- END CONTENT --> 
+    
+    
+    
+    
+    
+    </div>
+  </section>
+  <!-- End Room -->
+
+{% endblock %}

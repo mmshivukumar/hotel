@@ -1,0 +1,58 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+ <script>
+ $(document).ready(function(){
+	 
+	  $("#close").click(function(e){
+		  e.preventDefault();
+	   window.close();
+	  });
+	});
+
+</script>
+<section class="section clearfix">
+<!-- Container -->
+	<div id="container">
+<!-- Start Content -->
+		<div id="content">
+			<div class="container">
+				<div class="row sidebar-page">
+					
+					
+					<!-- Page Content -->
+					<div class="col-md-9 page-content">
+ <div class="modal-dialog">
+        <div class="modal-content">
+			<div class="modal-header">
+               
+                 <h4 class="modal-title">Check your Email</h4>
+            </div> <!-- /modal-header -->
+            <div class="modal-body">
+            
+			
+			
+				<p>
+				{{ 'resetting.check_email'|trans({'%email%': email}) }}
+				</p>
+			
+			
+			
+			
+            </div> <!-- /modal-body -->
+            <div class="modal-footer">
+                <a href="#" class="btn btn-system" id="close">Close</a>
+                
+            </div> <!-- /modal-footer -->
+
+        </div> <!-- /.modal-content -->
+ </div> <!-- /.modal-dialog -->
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+{% endblock %}

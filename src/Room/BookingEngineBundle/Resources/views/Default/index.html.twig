@@ -1,0 +1,422 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+<script>
+    $(document).ready(function() {
+    	// $('[data-toggle="popover"]').popover(); 
+$('#guests').click(function(e){	
+	e.preventDefault();
+    	 $('#guests').popover({
+    		    placement: "bottom",
+    		    trigger: "manual",
+    		    html : true,
+    		    content: $("#popover-content").html()
+    		}).popover("show");
+});
+
+$(".guests").on('click','#add-room',function(){
+	e.preventDefault();
+    	var room = $('#guests-room').html();
+    //	$('#guests-room').next(room);
+});
+        $('.adults').click(function(e){		
+			e.preventDefault(); //STOP default action 
+			 var id = $(this).attr('id');
+			 var value = parseInt($(this).attr('value'));
+			 var adults =parseInt( $('.adults-count').val());
+			 if (isNaN(adults)) { 
+				 adults= 0
+	            } 
+			 if(id=='decrement'){
+				 adults-=1;
+				 if(adults>=value) $('.adults-count').val(adults); else exit();
+			  }else{
+				adults+=1;
+			    if(adults<=20)  $('.adults-count').val(adults); else exit();
+				}	
+	    });
+        $('.children').click(function(e){		
+			e.preventDefault(); //STOP default action 
+			 var id = $(this).attr('id');
+			 var value = parseInt($(this).attr('value'));
+			 var adults =parseInt( $('#hotel_search_numChildren').val());
+			 if (isNaN(adults)) { 
+				 adults= 0
+	            } 
+			 if(id=='decrement'){
+				 adults-=1;
+				 if(adults>=value) $('#hotel_search_numChildren').val(adults); else exit();
+			  }else{
+				adults+=1;
+			    if(adults<=20)  $('#hotel_search_numChildren').val(adults); else exit();
+				}
+	    });
+    });
+    </script>
+{% endblock %}
+{% block body %}
+
+<!-- Start Banner -->
+  <section id="banner">
+     <div class="banner-bg">
+      <div class="banner-bg-item"><img src="{{ asset('img/banner3.jpg') }}" alt=""></div>
+     
+    </div>
+    
+    
+        <div class="css-table">
+      <div class="css-table-cell">
+
+        <!-- Start Banner-Search -->
+        <div class="banner-search">
+          <div class="container">
+              <div id="hero-tabs" class="banner-search-inner">
+                <ul class="custom-list tab-title-list clearfix">
+                  <li class="tab-title active"><a href="#yachts">Hotels</a></li>
+                  
+                </ul>
+                <ul class="custom-list tab-content-list">
+
+                  <!-- Start Hotel -->
+                  <li class="tab-content active row">
+                    {{ form_start(form) }}
+                     <span class="city select-box">
+                        {{ form_widget(form.city) }}
+                      </span>
+                      <span class="arrival calendar">
+                      	
+                        {{ form_widget(form.checkIn) }}
+                       
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                      <span class="departure calendar">
+                         {{ form_widget(form.checkOut) }}
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                      <span class="city guests">
+                      <input type="text" id="guests" value="2 Guests, 1 Room" readonly/>
+                      <div id="popover-content" style="display: none;">
+                      <div id="guests-room">
+                      	<h5>Room1</h5>
+                      	<div class="row">
+                      		<div class="col-lg-8">
+                      			<i class="adults-count">2</i> Adults <i class="guests-text">Above 12 years</i>
+                      		</div>
+                      		<div class="col-lg-4">
+                      			<a class="adults input-group-addon" id="decrement" value="1" href="#">-</a>
+                      			<a class="adults input-group-addon" id="increment" href="#">+</a>
+                      		</div>                     	
+                      	</div>
+                      	<hr>
+                      	<div class="row">
+                      		<div class="col-lg-8">
+                      			<i class="children-count">0</i> Children <i class="guests-text">Bellow 12 years</i>
+                      		</div>
+                      		<div class="col-lg-4">
+                      			<a class="children input-group-addon" id="decrement" value="1" href="#">-</a>
+                      			<a class="children input-group-addon" id="increment" href="#">+</a>
+                      		</div>                     	
+                      	</div> 
+                      	<hr> 
+                      	</div>
+                      	<a href="#" id="add-room">Add Room</a>                      	                      	
+                      </div>
+                      
+                      {#}
+                        <select name="guests"  data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">
+                        	<option>2 Guests, 1 Room </option>
+                        
+                        </select>
+                        {#}
+                      </span>
+                      {#}
+                      <span class="adults group-box">
+                       	<div class="input-group">
+                               <a class="adults input-group-addon" id="decrement" value="1" href="#">-</a> 
+                                                    {{ form_widget(form.numAdult) }}
+                               <a class="adults input-group-addon" id="increment" href="#">+</a>
+                         </div>
+                      </span>
+                      <span class="children group-box">
+                      		<div class="input-group">
+                               <a class="children input-group-addon" id="decrement" value="1" href="#">-</a> 
+                                                    {{ form_widget(form.numChildren) }}
+                               <a class="children input-group-addon" id="increment" href="#">+</a>
+                         	</div>
+                      </span>
+                      {#}
+                      <span class="submit-btn">
+                        <button class="btn btn-transparent">Search</button>                       
+                      </span>
+                     {{ form_end(form) }}
+                  </li>
+                  <!-- End Hotel -->
+
+                 
+
+                </ul>
+            </div>
+          </div>
+        </div>
+        <!-- End Banner-Search -->
+
+      </div>
+    </div>
+    
+  </section>
+  <!-- End Banner -->
+{#}
+  <!-- Start About -->
+  <section class="about">
+    <div class="container">
+      <div class="row">
+        <div class="preamble col-md-12">
+          <h3>About Sterling Suites</h3>
+         
+          <p> Serviced Apartments and Hotels, is a professionally managed hospitality firm by a team of dedicated professionals from the construction industry who have been in the industry for more than 2 decades. </p>
+          <p>Each apartment / hotel has been individually and stylishly designed with very high standard to give you the comfort of a modern living with extra facilities like satellite channels, complimentary broadband, luxury linen and respite from frequent power outages.</p>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End About -->
+  {#}
+  
+  <section>
+    <div class="container">
+		  <div class="row equalize xs-equalize-auto equalize-display-inherit">
+		                    <div class="col-lg-5 col-md-6 col-sm-6 xs-12 xs-text-center xs-margin-nineteen-bottom display-table" style="height: 652px;">
+		                        <div class="display-table-cell-vertical-middle">
+		                            <div class="margin-three-bottom sm-margin-five-bottom alt-font text-medium-gray text-medium tz-text">PROVIDING QUALITY SERVICES SINCE MORE THAN 2 DECADES.</div>
+		                            <!-- section title -->
+		                            <h2 class="alt-font title-extra-large sm-title-large xs-title-large text-yellow-ochre margin-eight-bottom tz-text sm-margin-ten-bottom">Redefines the luxury hospitality experience.</h2>
+		                            <!-- end section title -->
+		                            <div class="text-medium tz-text width-90 sm-width-100 margin-seven-bottom sm-margin-ten-bottom"><p>Serviced Apartments and Hotels, is a professionally managed hospitality firm by a team of dedicated professionals from the construction industry who have been in the industry for more than 2 decade</p></div>
+		                            <div class="text-medium tz-text width-90 sm-width-100 margin-fifteen-bottom sm-margin-ten-bottom"><p>Each apartment / hotel has been individually and stylishly designed with very high standard to give you the comfort of a modern living with extra facilities like satellite channels, complimentary broadband, luxury linen and respite from frequent power outages</p></div>
+		                          {#}  <a class="btn btn-medium propClone btn-circle bg-yellowish-gray text-white" href="#content-section19"><span class="tz-text">READ MORE</span><i class="fa fa-angle-right icon-extra-small tz-icon-color"></i></a> {#}
+		                        </div>
+		                    </div>
+		                    <div class="col-lg-7 col-md-6 col-sm-6 xs-12 xs-text-center display-table" style="height: 652px;">
+		                        <div class="display-table-cell-vertical-middle">
+		                            <img alt="" src="{{ asset('img/application-screenshot-img-06.png') }}" data-img-size="(W)800px X (H)785px" style="width: 100%">
+		                        </div>
+		                    </div>
+		</div>
+
+ </div>
+  </section>
+  <!-- End  -->
+  
+  
+  <section class="padding-110px-tb xs-padding-60px-tb blog-style1 bg-light-deep-yellow builder-bg" id="blog-section1">
+            <div class="container">
+                <!-- section title -->
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                        <h2 class="section-title-large sm-section-title-medium xs-section-title-large text-yellow-ochre font-weight-600 alt-font margin-three-bottom xs-margin-fifteen-bottom tz-text">ROOMS &amp; SUITS</h2>
+                        <div class="text-medium width-60 margin-lr-auto md-width-70 sm-width-100 tz-text margin-thirteen-bottom  xs-margin-nineteen-bottom">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
+                    </div>
+                </div>
+                <!-- end section title -->
+                <div class="row">
+                    <!-- blog item -->
+                    <div class="col-md-4 col-sm-4 col-xs-12 xs-margin-nineteen-bottom">
+                        <div class="blog-post">
+                            <!-- blog image -->
+                            <div class="blog-image">
+                                <a href="#subscribe-section8" class="inner-link"><img class="img100" alt="" src="{{ asset('img/agency-blog-img01.jpg') }}" data-img-size="(W)800px X (H)507px"></a>
+                            </div>
+                            <!-- end blog image -->
+                            <!-- blog details -->
+                            <div class="post-details bg-white tz-background-color">
+                                <div class="post-author tz-background-color bg-yellowish-gray margin-thirteen-bottom md-margin-eleven-bottom xs-margin-eight-bottom"><a href="#subscribe-section8" class="tz-text text-white blog-name inner-link">FROM <i class="fa fa-inr"></i> 2499 / PER NIGHT</a></div>
+                                <a href="#subscribe-section8" class="tz-text text-dark-gray blog-post-title text-medium font-weight-600 margin-five-bottom display-inline-block md-margin-five-bottom inner-link">CLASSIC DOUBLE ROOM</a>
+                                <div class="text-medium tz-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.</div>
+                            </div>
+                            <!-- end blog details -->
+                        </div>
+                    </div>
+                    <!-- end blog item -->
+                    <!-- blog item -->
+                    <div class="col-md-4 col-sm-4 col-xs-12 xs-margin-nineteen-bottom">
+                        <div class="blog-post">
+                            <!-- blog image -->
+                            <div class="blog-image">
+                                <a href="#subscribe-section8" class="inner-link"><img class="img100" alt="" src="{{ asset('img/agency-blog-img02.jpg') }}" data-img-size="800px (W) X 507px (H)"></a>
+                            </div>
+                            <!-- end blog image -->
+                            <!-- blog details -->
+                            <div class="post-details bg-white tz-background-color">
+                                <div class="post-author tz-background-color bg-yellowish-gray margin-thirteen-bottom md-margin-eleven-bottom xs-margin-eight-bottom"><a href="#subscribe-section8" class="tz-text text-white blog-name inner-link">FROM <i class="fa fa-inr"></i> 1999 / PER NIGHT</a></div>
+                                <a href="#subscribe-section8" class="tz-text text-dark-gray blog-post-title text-medium font-weight-600 margin-five-bottom display-inline-block md-margin-five-bottom inner-link">ONE BEDROOM SUITE</a>
+                                <div class="text-medium tz-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.</div>
+                            </div>
+                            <!-- end blog details -->
+                        </div>
+                    </div>
+                    <!-- end blog item -->
+                    <!-- blog item -->
+                    <div class="col-md-4 col-sm-4 col-xs-12 xs-margin-nineteen-bottom">
+                        <div class="blog-post">
+                            <!-- blog image -->
+                            <div class="blog-image">
+                                <a href="#subscribe-section8" class="inner-link"><img class="img100" alt="" src="{{ asset('img/agency-blog-img03.jpg') }}" data-img-size="(W)800px X (H)507px"></a>
+                            </div>
+                            <!-- end blog image -->
+                            <!-- blog details -->
+                            <div class="post-details bg-white tz-background-color">
+                                <div class="post-author tz-background-color bg-yellowish-gray margin-thirteen-bottom md-margin-eleven-bottom xs-margin-eight-bottom"><a href="#subscribe-section8" class="tz-text text-white blog-name inner-link">FROM <i class="fa fa-inr"></i> 1599 / PER NIGHT</a></div>
+                                <a href="#subscribe-section8" class="tz-text text-dark-gray blog-post-title text-medium font-weight-600 margin-five-bottom display-inline-block md-margin-five-bottom inner-link">EMPIRE STATE VIEW SUITE</a>
+                                <div class="text-medium tz-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.</div>
+                            </div>
+                            <!-- end blog details -->
+                        </div>
+                    </div>
+                    <!-- end blog item -->
+                </div>
+            </div>
+        </section>
+
+  <!-- Start Testimonials -->
+  <section class="testimonials">
+
+    <!-- Start Video Background -->
+    <div id="video_testimonials" data-vide-bg="video/ocean" data-vide-options="position: 0% 50%"></div>
+    <div class="video_gradient"></div>
+    <!-- End Video Background -->
+
+    <div class="container">
+      <div class="row">
+        <div class="preamble light col-md-12">
+          <h3>Testimonials</h3>
+        </div>
+
+        <div class="col-md-12">
+          <div id="owl-testimonials" class="owl-carousel owl-theme">
+
+            <!-- Start Container Item -->
+            <div class="item">
+              <div class="col-lg-12">
+                <blockquote class="quote">
+                  <cite>John Doe<span class="job">CEO - UOUapps</span></cite>
+                  <p class="stars">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                  </p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui.
+                </blockquote>
+              </div>
+            </div>
+            <!-- End Container Item -->
+
+            <!-- Start Container Item -->
+            <div class="item">
+              <div class="col-lg-12">
+                <blockquote class="quote">
+                  <cite>John Kowalski<span class="job">CEO - UOUapps</span></cite>
+                  <p class="stars">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                  </p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui.
+                </blockquote>
+              </div>
+            </div>
+            <!-- End Container Item -->
+
+            <!-- Start Container Item -->
+            <div class="item">
+              <div class="col-lg-12">
+                <blockquote class="quote">
+                  <cite>John Doe<span class="job">CEO - UOUapps</span></cite>
+                  <p class="stars">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                  </p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue, suscipit a, scelerisque sed, lacinia in, mi. Cras vel lorem. Etiam pellentesque aliquet tellus. Phasellus pharetra nulla ac diam. Quisque semper justo at risus. Donec venenatis, turpis vel hendrerit interdum, dui ligula ultricies purus, sed posuere libero dui.
+                </blockquote>
+              </div>
+            </div>
+            <!-- End Container Item -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Testimonials -->
+
+ 
+ <section class="padding-150px-tb feature-style4 bg-light-deep-yellow builder-bg xs-padding-60px-tb border-none" id="feature-section7">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 four-column">
+                        <!-- feature box -->
+                        <div class="col-md-3 col-sm-6 col-xs-12 text-center sm-margin-nine-bottom xs-margin-nineteen-bottom">
+                            <div class="margin-nineteen-bottom sm-margin-thirteen-bottom xs-margin-nine-bottom"><img alt="" src="{{ asset('img/restaurant-service-icon01.png') }}" data-img-size="(W)90px X (H)90px"></div>
+                            <h3 class="text-medium text-dark-gray alt-font margin-three-bottom display-block sm-margin-nine-bottom xs-margin-five-bottom tz-text">GREAT ENVIRONMENT</h3>
+                            <div class="text-medium tz-text"> <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been.</p> </div>
+                        </div>
+                        <!-- end feature box -->
+                        <!-- feature box -->
+                        <div class="col-md-3 col-sm-6 col-xs-12 text-center sm-margin-nine-bottom xs-margin-nineteen-bottom">
+                            <div class="margin-nineteen-bottom sm-margin-thirteen-bottom xs-margin-nine-bottom"><img alt="" src="{{ asset('img/restaurant-service-icon02.png') }}" data-img-size="(W)90px X (H)90px"></div>
+                            <h3 class="text-medium text-dark-gray alt-font margin-three-bottom display-block sm-margin-nine-bottom xs-margin-five-bottom tz-text">FREE BREAKFAST</h3>
+                            <div class="text-medium tz-text"> <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been.</p> </div>
+                        </div>
+                        <!-- end feature box -->
+                        <!-- feature box -->
+                        <div class="col-md-3 col-sm-6 col-xs-12 text-center xs-margin-nine-bottom xs-margin-nineteen-bottom">
+                            <div class="margin-nineteen-bottom sm-margin-thirteen-bottom xs-margin-nine-bottom"><img alt="" src="{{ asset('img/restaurant-service-icon03.png') }}" data-img-size="(W)90px X (H)90px"></div>
+                            <h3 class="text-medium text-dark-gray alt-font margin-three-bottom display-block sm-margin-nine-bottom xs-margin-five-bottom tz-text">CLEAN EVERYDAY</h3>
+                            <div class="text-medium tz-text"> <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been.</p> </div>
+                        </div>
+                        <!-- end feature box -->
+                        <!-- feature box -->
+                        <div class="col-md-3 col-sm-6 col-xs-12 text-center">
+                            <div class="margin-nineteen-bottom sm-margin-thirteen-bottom xs-margin-nine-bottom"><img alt="" src="{{ asset('img/restaurant-service-icon04.png') }}" data-img-size="(W)90px X (H)90px"></div>
+                            <h3 class="text-medium text-dark-gray alt-font margin-three-bottom display-block sm-margin-nine-bottom xs-margin-five-bottom tz-text">ENJOY NIGHTLIFE</h3>
+                            <div class="text-medium tz-text"> <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been. </p> </div>
+                        </div>
+                        <!-- end feature box -->
+                    </div>
+                </div>
+            </div>
+        </section>
+{#}
+  <!-- Start Partners -->
+  <section class="partners">
+    <div class="container">
+      <div class="row">
+        <div class="preamble col-md-12">
+          <h3>Our Partners</h3>
+        </div>
+        <div class="col-md-12">
+          <div id="clients-slider" class="owl-carousel">
+            <img src="{{ asset('img/company1.png') }}" alt="" class="img-responsive">
+            <img src="{{ asset('img/company2.png') }}" alt="" class="img-responsive">
+            <img src="{{ asset('img/company3.png') }}" alt="" class="img-responsive">
+            <img src="{{ asset('img/company1.png') }}" alt="" class="img-responsive">
+            <img src="{{ asset('img/company2.png') }}" alt="" class="img-responsive">
+            <img src="{{ asset('img/company3.png') }}" alt="" class="img-responsive">
+            <img src="{{ asset('img/company1.png') }}" alt="" class="img-responsive">
+            <img src="{{ asset('img/company2.png') }}" alt="" class="img-responsive">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Partners -->
+  {#}
+
+{% endblock %}
