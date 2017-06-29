@@ -1,3 +1,9 @@
-hotel_details:
-    path:     /hotel-detail
-    defaults: { _controller: "RoomHotelBundle:Hotel:hotelAdd" }
+room_hotel_add_hotel:
+    path:     /add-hotel
+    defaults: { _controller: "RoomHotelBundle:Hotel:addHotel" }
+room_hotel_edit_hotel:
+    path:     /edit/{id}/hotel
+    defaults: { _controller: "RoomHotelBundle:Hotel:editHotel" }
+room_hotel_search_hotel:
+    path:     /search-hotel
+    defaults: { _controller: "RoomHotelBundle:Hotel:searchHotel" }

@@ -1,0 +1,127 @@
+{% extends 'page.html.twig' %}
+
+{% block breadcrumbsTitle %}Hotel Search{% endblock %}
+
+{% block breadcrumbsLinks %}
+            <li><a href="{{ path('room_booking_engine_homepage') }}">Home</a></li>
+            <li><a href="{{ path('room_site_management_about_us') }}">Hotel Search</a></li>
+{% endblock %}
+
+
+{% block javascripts %}
+
+<script type="text/javascript">
+
+$('.calendar').datepicker({
+    dateFormat: dateformat,
+    minDate: 0,
+    beforeShow: function() {
+      input.addClass('active');
+    },
+    onClose: function() {
+      input.removeClass('active');
+      // TRANSPLANT WIDGET BACK TO THE END OF BODY IF NEEDED
+      widget.hide();
+      if (!widget.parent().is('body')) {
+        widget.detach().appendTo($('body'));
+      }
+    }
+  });
+
+
+</script>
+{% endblock %}
+{% block body %}
+
+  <!-- Start Team -->
+  <section class="team">
+    <div class="container">
+      <div class="row">
+      		    <div id="fullwidth" class="col-sm-12">
+                    <div class="col-lg-12">
+                    
+    {#}
+    
+   {{ form_start(form) }}
+   {{ form_errors(form) }}
+   
+	<div class="row">
+			 <div class="col-lg-3 col-sm-3">
+			<div class="row form-group {% if form.from.vars.errors|length %}has-error{% endif %}">
+                    <div class="col-lg-5">
+                            {{ form_label(form.from) }}
+                        </div>
+                        <div class="col-lg-7">
+                        	
+                            {{ form_widget(form.from) }}
+                        </div>
+                       </div>
+                      </div>
+                     
+			
+             <div class="col-lg-3 col-sm-3">
+            <div class="row form-group {% if form.to.vars.errors|length %}has-error{% endif %}">
+                    <div class="col-lg-5">
+                            {{ form_label(form.to) }}
+                        </div>
+                        <div class="col-lg-7">
+                        
+                        	{{ form_widget(form.to) }}
+                        	
+                             </div>
+                            </div>
+            </div>
+                            
+                          
+				<div class="col-lg-2 col-sm-2">
+				{{ form_widget(form.submit,{ 'attr': {'class': 'btn-system'}}) }}
+					{{ form_end(form) }}
+				</div>
+								
+			
+			</div>
+            
+            {#}
+                    
+                    
+                    <table id="result" class="table table-bordered col-lg-12 col-sm-12">
+	               {% if hotels|length>0 %}	
+                          <tr class="blue">
+                                <th>Sl.No #</th>
+                                <th>Name</th>
+                                <th>Location</th>
+                                <th>Check In</th>
+                                <th>Check Out</th>
+                                <th>Num of Rooms </th>
+                                <th>Sold Out </th>
+                                <th> Status </th>
+                                <th> - </th>
+							</tr>	
+					{% endif %}			
+						
+                     {% for hotel in hotels if hotels|length>0 %}
+                        <tr>
+                        	<td>{{ loop.index }} </td>
+                            <td>{{ hotel.name }}</td>
+                            <td>{% if hotel.address %} {{ hotel.address.location }} {% endif %}</td>
+                            <td>{{ hotel.checkIn }}</td>
+                            <td>{{ hotel.checkOut }}</td>
+                            <td>{{ hotel.numRooms }}</td>
+                            <td> {% if hotel.soldOut %} Yes {% else %} No {% endif %}</td>
+                            <td> {% if hotel.active %} Active {% else %} In-active {% endif %}</td>
+                            <td> <a href="{{ path('room_hotel_edit_hotel',{ 'id': hotel.id }) }}"><i class="fa fa-pencil-square-o"></i></a></td>
+                        
+                        </tr>
+                    {% endfor %}
+                        </table>
+                    </div>
+                </div>
+      </div>
+     </div>
+  </section>
+
+
+
+ 
+
+{% endblock %}

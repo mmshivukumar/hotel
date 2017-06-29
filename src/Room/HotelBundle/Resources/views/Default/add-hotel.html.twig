@@ -1,0 +1,23 @@
+{% extends 'page.html.twig' %}
+
+{% block breadcrumbsTitle %}Add Hotel{% endblock %}
+
+{% block breadcrumbsLinks %}
+            <li><a href="{{ path('room_booking_engine_homepage') }}">Home</a></li>
+            <li><a href="{{ path('room_site_management_about_us') }}">Add Hotel</a></li>
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+<h1 class="page-header">Add Hotel Details</h1>
+{{ form_start(form) }}
+
+	<div class="row">
+		<div class="col-lg-6">
+			{{ form_widget(form) }}
+		</div>
+	</div>
+{{ form_end(form) }}
+</div>
+{% endblock %}

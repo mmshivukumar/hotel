@@ -17,20 +17,71 @@ class HotelDetailType extends AbstractType
         $builder
             ->add('name')
             ->add('overview')
-            ->add('propertyType')
-         	->add('category')
+            ->add('propertyType', 'choice', array(
+            		'expanded' => false,
+            		'multiple' => false,
+            		'label' => 'Property Type',
+            		'choices' => array(
+            				'Service Apartments'=>'Service Apartments',
+            				'Resort'=>'Resort',
+            		),
+            		'required'    => true,
+            ))
+            ->add('category', 'choice', array(
+            		'expanded' => false,
+            		'multiple' => false,
+            		'label' => 'Category',
+            		'choices' => array(
+            				'3'=>'3 Star',
+            				'4'=>'4 Star',
+            				'5'=>'5 Star',
+            		),
+            		'required'    => true,
+            ))
             ->add('checkIn')
             ->add('checkOut')
-            ->add('price')
-            ->add('city')
+            ->add('price')          
             ->add('numRooms')
-            ->add('priority')
-            ->add('soldOut')
-            ->add('active')
+            ->add('priority', 'choice', array(
+            		'expanded' => false,
+            		'multiple' => false,
+            		'label' => 'Priority',
+            		'choices' => array(          				            				
+            				'5'=>'5',
+            				'4'=>'4',
+            				'3'=>'3',
+            				'2'=>'2',
+            				'1'=>'1',
+            		),
+            		'required'    => true,
+            ))
+            ->add('soldOut', 'choice', array(
+            		'expanded' => false,
+            		'multiple' => false,
+            		'label' => 'Sold Out',
+            		'choices' => array(
+            				'0'=>'No',
+            				'1'=>'Yes',
+            				
+            		),
+            		'required'    => true,
+            ))
+            ->add('active', 'choice', array(
+            		'expanded' => false,
+            		'multiple' => false,
+            		'label' => 'Status',
+            		'choices' => array(
+            				'1'=>'Active',
+            				'0'=>'InActive',
+            		),
+            		'required'    => true,
+            ))
             ->add('addressLine1')
             ->add('addressLine2')
+            ->add('city')
             ->add('location')
             ->add('pincode')
+           
             
         ;
     }

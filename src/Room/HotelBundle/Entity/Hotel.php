@@ -79,7 +79,7 @@ class Hotel
      * @ORM\Column(name="num_rooms", type="integer")
      */
     private $numRooms;
-    
+       
     /**
      * @var boolean
      *
