@@ -4,6 +4,9 @@ room_booking_engine_homepage:
 room_booking_engine_search:
     path:     /search
     defaults: { _controller: RoomBookingEngineBundle:Booking:search }
+room_booking_engine_filter:
+    path:     /filter
+    defaults: { _controller: RoomBookingEngineBundle:Booking:filter }
 room_booking_engine_view_more:
     path:     /view-more/{id}
     defaults: { _controller: RoomBookingEngineBundle:Booking:viewMore }

@@ -17,6 +17,39 @@ class Search
 	 */
 	private $city;
 	/**
+	 * @var string
+	 */
+	private $location;
+	/**
+	 * @var integer
+	 */
+	private $categories;
+	/**
+	 * @var Collection
+	 */
+	private $amenities;
+	/**
+	 * @var Collection
+	 */
+	private $price;
+	
+	/**
+	 * @var Collection
+	 */
+	private $minPrice;
+	/**
+	 * @var Collection
+	 */
+	private $maxPrice;
+	/**
+	 * @var Collection
+	 */
+	private $min;
+	/**
+	 * @var Collection
+	 */
+	private $max;
+	/**
 	 * @var date
 	 */
 	private $checkIn;
@@ -28,6 +61,10 @@ class Search
 	 * @var integer
 	 */
 	private $numAdult;
+	/**
+	 * @var integer
+	 */
+	private $numRooms;
 	/**
 	 * @var integer
 	 */
@@ -48,6 +85,150 @@ class Search
 	 */
 	public function setCity($city) {
 		$this->city = $city;
+		return $this;
+	}
+	
+	/**
+	 *
+	 * @return the string
+	 */
+	public function getLocation() {
+		return $this->location;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$location
+	 */
+	public function setLocation($location) {
+		$this->location = $location;
+		return $this;
+	}
+	
+	/**
+	 *
+	 * @return the integer
+	 */
+	public function getCategories() {
+		return $this->categories;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$categories
+	 */
+	public function setCategories($categories) {
+		$this->categories = $categories;
+		return $this;
+	}
+	
+	/**
+	 *
+	 * @return the Collection
+	 */
+	public function getAmenities() {
+		return $this->amenities;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$amenities
+	 */
+	public function setAmenities($amenities) {
+		$this->amenities = $amenities;
+		return $this;
+	}
+	
+	/**
+	 *
+	 * @return the Collection
+	 */
+	public function getPrice() {
+		return $this->price;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$price
+	 */
+	public function setPrice($price) {
+		$this->price = $price;
+		return $this;
+	}
+	
+	/**
+	 *
+	 * @return the Collection
+	 */
+	public function getMinPrice() {
+		return $this->minPrice;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$minPrice
+	 */
+	public function setMinPrice($minPrice) {
+		$this->minPrice = $minPrice;
+		return $this;
+	}
+	
+	/**
+	 *
+	 * @return the Collection
+	 */
+	public function getMaxPrice() {
+		return $this->maxPrice;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$maxPrice
+	 */
+	public function setMaxPrice($maxPrice) {
+		$this->maxPrice = $maxPrice;
+		return $this;
+	}
+	
+	/**
+	 *
+	 * @return the Collection
+	 */
+	public function getMin() {
+		return $this->min;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$min
+	 */
+	public function setMin($min) {
+		$this->min = $min;
+		return $this;
+	}
+	
+	/**
+	 *
+	 * @return the Collection
+	 */
+	public function getMax() {
+		return $this->max;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$max
+	 */
+	public function setMax($max) {
+		$this->max = $max;
 		return $this;
 	}
 	
@@ -109,6 +290,24 @@ class Search
 	 *
 	 * @return the integer
 	 */
+	public function getNumRooms() {
+		return $this->numRooms;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$numRooms
+	 */
+	public function setNumRooms($numRooms) {
+		$this->numRooms = $numRooms;
+		return $this;
+	}
+	
+	/**
+	 *
+	 * @return the integer
+	 */
 	public function getNumChildren() {
 		return $this->numChildren;
 	}
@@ -122,6 +321,7 @@ class Search
 		$this->numChildren = $numChildren;
 		return $this;
 	}
+	
 	
 	
 	

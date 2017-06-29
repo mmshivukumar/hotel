@@ -33,12 +33,12 @@ $(document).ready(function() {
 {% endblock %}
 
 
-{# {% block breadcrumbsTitle %}{{ hotel.name }}{% endblock %}#}
+{% block breadcrumbsTitle %}{{ hotel.name }}{% endblock %}
 
-{# {% block breadcrumbsLinks %}#}
-{#             <li><a href="{{ path('room_booking_engine_homepage') }}">Home</a></li>#}
-{#             <li><a href="#">{{ hotel.name }}</a></li>#}
-{# {% endblock %}#}
+{% block breadcrumbsLinks %}
+            <li><a href="{{ path('room_booking_engine_homepage') }}">Home</a></li>
+            <li><a href="#">{{ hotel.name }}</a></li>
+{% endblock %}
 
 {% block body %}
 

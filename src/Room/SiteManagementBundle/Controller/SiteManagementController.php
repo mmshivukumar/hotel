@@ -5,6 +5,8 @@ namespace Room\SiteManagementBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Room\SiteManagementBundle\Form\ContactType;
 use Room\SiteManagementBundle\Entity\Contact;
+use Room\SiteManagementBundle\Form\BookingSearchType;
+use Room\SiteManagementBundle\DTO\BookingSearch;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,6 +21,8 @@ class SiteManagementController extends Controller
     }
     
     
+    
+    
     /**
      *
      * @param Contact $entity
@@ -28,10 +32,71 @@ class SiteManagementController extends Controller
     	$catalogueService = $this->container->get( 'catalogue.service' );
     	$form = $this->createForm(new ContactType($catalogueService), $dto, array(
     			'action' => $this->generateUrl('room_site_management_contact_us'),
-    			'method' => 'GET',
+    			'method' => 'POST',
     	));
     		
     	return $form;
+    }
+    
+    /**
+     *
+     * @param Contact $entity
+     * @return unknown
+     */
+    private function createBookingSearchForm(BookingSearch $dto){
+    	$catalogueService = $this->container->get( 'catalogue.service' );
+    	$form = $this->createForm(new BookingSearchType($catalogueService), $dto, array(
+    			'action' => $this->generateUrl('room_site_management_booking_search'),
+    			'method' => 'GET',
+    	));
+    	
+    	$form->add ( 'submit', 'submit', array (
+    			'label' => 'Search'
+    	) );
+    
+    	return $form;
+    }
+    
+    
+    /**
+     *
+     * @param Request $request
+     */
+    public function bookingSearchAction(Request $request)
+    {
+    	$security = $this->container->get ( 'security.context' );
+    	
+    	$user = $security->getToken ()->getUser ();
+    	
+    	if (! $security->isGranted ( 'ROLE_SUPER_ADMIN' )) {
+    	
+    		return $this->redirect ( $this->generateUrl ('room_security_user_login') );
+    	
+    	}
+    	$bookings = array();
+    	$bookingSearch = new BookingSearch();
+    	$form   = $this->createBookingSearchForm($bookingSearch);
+    	$form->handleRequest($request);
+    	if ($form->isValid()) {
+    		
+    		$catalogueService = $this->container->get( 'catalogue.service' ); 
+    		$bookings = $catalogueService->getBookingsBySearch($bookingSearch);
+    		$customers = $catalogueService->getCustomers();
+    		$customers = $catalogueService->getById($customers);
+    		//$hotels = $catalogueService->getHotels();
+    		//$hotels = $catalogueService->getById($hotels);
+    		
+    		return $this->render('RoomSiteManagementBundle:Default:booking-search.html.twig', array(
+    				'form'   => $form->createView(),
+    				'bookings'=>$bookings,
+    				'customers'=>$customers,
+    				//'hotels'=>$hotels
+    		));
+    	}
+    	return $this->render('RoomSiteManagementBundle:Default:booking-search.html.twig', array(
+    			'form'   => $form->createView(),
+    			'bookings'=>$bookings
+    	));
     }
     /**
      * 

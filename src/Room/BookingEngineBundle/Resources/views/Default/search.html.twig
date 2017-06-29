@@ -1,74 +1,259 @@
 {% extends 'page.html.twig' %}
 
-{# {% block breadcrumbsTitle %}Search Rooms{% endblock %}#}
+{% block breadcrumbsTitle %}Search Rooms{% endblock %}
 
-{# {% block breadcrumbsLinks %}#}
-{#             <li><a href="{{ path('room_booking_engine_homepage') }}">Home</a></li>#}
-{#             <li><a href="#">Search</a></li>#}
-{# {% endblock %}#}
+{% block breadcrumbsLinks %}
+            <li><a href="{{ path('room_booking_engine_homepage') }}">Home</a></li>
+            <li><a href="#">Search</a></li>
+{% endblock %}
+{% block stylesheets %}
+ <link rel="stylesheet" href="{{ asset('css/ion.rangeSlider.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/ion.rangeSlider.skinFlat.css') }}" />
+ 
+ {% endblock %}
+{% block javascripts %}
 
+<script src="{{ asset('js/ionrangeslider.min.js') }}"></script>
+
+<script type="text/javascript">
+$("#filter-search").on('change', ':checkbox', function (e) {
+	   $("form[name='hotel_search_filter']").submit();
+	});
+	
+$("#hotel_search_filter_price").ionRangeSlider({
+    type: 'double',
+    prefix: "<i class='fa fa-inr'></i> ",
+    onChange: function (data) {
+    	$("form[name='hotel_search_filter']").submit();
+    },
+    prettify: false,
+    hasGrid: true
+});
+</script>
+
+<script>
+var room = $('#guests-room').html();
+$("#guests-box").on('click','#add-room',function(e){
+	e.preventDefault();    	
+    	//alert(room);
+    	var roomCount = parseInt($(this).attr('value'));
+    	var adultCount = parseInt($('#hotel_search_numAdult').val());
+    	
+    	roomCount+=1;    	
+    	$(this).attr('value',roomCount);
+    	$('#guests-room').append("<h5>Room "+roomCount+"</h5>");
+    	$('#guests-room').append(room);
+    	$('#hotel_search_numRooms').val(roomCount);
+    	$('#hotel_search_numAdult').val(adultCount+2);
+    	 var totalAdultCount = parseInt($('#hotel_search_numAdult').val());
+    	 var totalChildCount = parseInt($('#hotel_search_numChildren').val());
+    	var guests = totalAdultCount + totalChildCount;
+    	var guestsText = guests+' Guests, '+roomCount+' Rooms';
+    	$('#guests').val(guestsText);
+});
+$("#guests-box").on('click','.adults',function(e){	
+	e.preventDefault(); //STOP default action 
+	 var id = $(this).attr('id');
+	 var value = parseInt($(this).attr('value'));
+	// var value = 3;
+	 var totalAdultCount = parseInt($('#hotel_search_numAdult').val());
+	 var totalChildCount = parseInt($('#hotel_search_numChildren').val());
+	 var roomCount = parseInt($('#hotel_search_numRooms').val());
+	 var adultsCount = $(this).closest('.row').find('.adults-count');
+	 var adults =parseInt( $(adultsCount).html());
+	 if (isNaN(adults)) { 
+		 adults= 0
+        } 
+	// alert(adults);
+	 if(id=='decrement'){
+		 adults-=1;
+		 totalAdultCount-=1;
+		 if(adults>=value) $(adultsCount).html(adults); else exit();
+	  }else{
+		adults+=1;
+		totalAdultCount+=1;
+	    if(adults<=20)  $(adultsCount).html(adults); else exit();
+		}
+	 $('#hotel_search_numAdult').val(totalAdultCount);
+	 var guests = totalAdultCount + totalChildCount;
+ 	var guestsText = guests+' Guests, '+roomCount+' Rooms';
+ 	$('#guests').val(guestsText);	
+});
+$("#guests-box").on('click','.children',function(e){	
+	e.preventDefault(); //STOP default action 
+	 var id = $(this).attr('id');
+	 var value = parseInt($(this).attr('value'));
+	 var totalAdultCount = parseInt($('#hotel_search_numAdult').val());
+	 var totalChildCount = parseInt($('#hotel_search_numChildren').val());
+	 var childrenCount = $(this).closest('.row').find('.children-count');
+	 var roomCount = parseInt($('#hotel_search_numRooms').val());
+	 var children =parseInt( $(childrenCount).html());
+	 if (isNaN(children)) { 
+		 children= 0
+        } 
+	 if(id=='decrement'){
+		 children-=1;
+		 totalChildCount-=1;
+		 if(children>=value) $(childrenCount).html(children); else exit();
+	  }else{
+		  children+=1;
+		  totalChildCount+=1;
+	    if(children<=20)  $(childrenCount).html(children); else exit();
+		}
+	 $('#hotel_search_numChildren').val(totalChildCount);
+	 var guests = totalAdultCount + totalChildCount;
+ 	var guestsText = guests+' Guests, '+roomCount+' Rooms';
+ 	$('#guests').val(guestsText);
+});
+
+
+$('#guests').click(function(e){
+	//var room = $('#guests-room').html();
+	//$('#guests-room').next(room);
+	e.preventDefault();
+    	 $('#guests').popover({
+    		    placement: "bottom",
+    		    trigger: "manual",
+    		    html : true,
+    		    content: $("#popover-content").html()
+    		}).popover("show");
+
+
+        
+    });
+    </script>
+{% endblock %}
 {% block body %}
 
+
+<!-- Start Banner -->
+  <section id="banner" class="search-page">
+       <!-- Start Banner-Search -->
+        <div class="banner-search">
+          <div class="container">
+              <div id="hero-tabs" class="banner-search-inner">
+                <ul class="custom-list tab-content-list">
+
+                  <!-- Start Hotel -->
+                  <li class="tab-content active row">
+                   <div id="search-form">
+                    {{ form_start(form) }}
+                     <span class="city select-box">
+                        {{ form_widget(form.city) }}
+                      </span>
+                      <span class="arrival calendar">
+                      	
+                        {{ form_widget(form.checkIn) }}
+                       
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                      <span class="departure calendar">
+                         {{ form_widget(form.checkOut) }}
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                      <span class="city guests" id="guests-box">
+                      <input type="text" id="guests" value="{{ search.numAdult }} Guests, {{ search.numRooms }} Room" readonly/>
+                      <div id="popover-content" style="display: none">
+                      
+                      	<h5>Room 1</h5>
+                      	
+                      	<div id="guests-room">
+                      	<div class="row">
+                      		<div class="col-lg-8">
+                      			<i class="adults-count">2</i> Adults <i class="guests-text">Above 12 years</i>
+                      		</div>
+                      		<div class="col-lg-4">
+                      			<a class="adults input-group-addon" id="decrement" value="2" href="#">-</a>
+                      			<a class="adults input-group-addon" id="increment" href="#">+</a>
+                      		</div>                     	
+                      	</div>
+                      	<hr>
+                      	<div class="row">
+                      		<div class="col-lg-8">
+                      			<i class="children-count">0</i> Children <i class="guests-text">Bellow 12 years</i>
+                      		</div>
+                      		<div class="col-lg-4">
+                      			<a class="children input-group-addon" id="decrement" value="0" href="#">-</a>
+                      			<a class="children input-group-addon" id="increment" href="#">+</a>
+                      		</div>                     	
+                      	</div> 
+                      	<hr> 
+                      	</div>
+                      	<a href="#" id="add-room" value="1">Add Room</a>                      	                      	
+                      </div>
+                    
+                      
+                      {#}
+                        <select name="guests"  data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">
+                        	<option>2 Guests, 1 Room </option>
+                        
+                        </select>
+                        
+                        {#}
+                       
+                      </span>
+                      {#}
+                      <span class="adults group-box">
+                       	<div class="input-group">
+                               <a class="adults input-group-addon" id="decrement" value="1" href="#">-</a> 
+                                                    {{ form_widget(form.numAdult) }}
+                               <a class="adults input-group-addon" id="increment" href="#">+</a>
+                         </div>
+                      </span>
+                      <span class="children group-box">
+                      		<div class="input-group">
+                               <a class="children input-group-addon" id="decrement" value="1" href="#">-</a> 
+                                                    {{ form_widget(form.numChildren) }}
+                               <a class="children input-group-addon" id="increment" href="#">+</a>
+                         	</div>
+                      </span>
+                      {#}
+                      <span class="submit-btn">
+                      	 {{ form_widget(form.numAdult) }}
+                      	  {{ form_widget(form.numChildren) }}
+                      	   {{ form_widget(form.numRooms) }}
+                        <button class="btn btn-transparent">Search</button>                       
+                      </span>
+                     {{ form_end(form) }}
+                     </div>
+                  </li>
+                  <!-- End Hotel -->
+
+                 
+
+                </ul>
+            </div>
+          </div>
+        </div>
+        <!-- End Banner-Search -->
+ </section>
+
+
  <section id="listing">
+
+ 
     <div class="container">
       <div class="row">
         <div class="sidebar col-md-3">
           <div class="fleets-filters toggle-container">
             <h5 class="toggle-title">Filters</h5>
-            <aside class="toggle-content">
+            <aside class="toggle-content" id="filter-search">
+             {{ form_start(filterForm) }}
+             
               <div class="general">
                 <h5 class="title">Location</h5>
                 <ul class="custom-list additional-filter-list clearfix">
+                {% for key, item in filterForm.location.children %}			
                   <li>
                     <span class="checkbox-input">
-                      <input id="additional-filter-ac"  type="checkbox">
-                      <label for="additional-filter-ac">BTM</label>
+                     
+                      {{ form_widget(item) }}
+                      {{ form_label(item) }}
                     </span>
-                  </li> 
-                  <li>
-                    <span class="checkbox-input">
-                      <input id="additional-filter-hotbath"  type="checkbox">
-                      <label for="additional-filter-hotbath">Marathahalli</label>
-                    </span>
-                  </li> 
-                  <li>
-                    <span class="checkbox-input">
-                      <input id="additional-filter-parking" type="checkbox">
-                      <label for="additional-filter-parking">HSR</label>
-                    </span>
-                  </li> 
-                   <li>
-                    <span class="checkbox-input">
-                      <input id="additional-filter-ac"  type="checkbox">
-                      <label for="additional-filter-ac">MG Road</label>
-                    </span>
-                  </li> 
-                  <li>
-                    <span class="checkbox-input">
-                      <input id="additional-filter-hotbath"  type="checkbox">
-                      <label for="additional-filter-hotbath">Whitefield</label>
-                    </span>
-                  </li> 
-                  <li>
-                    <span class="checkbox-input">
-                      <input id="additional-filter-parking" type="checkbox">
-                      <label for="additional-filter-parking">ITPL</label>
-                    </span>
-                  </li> 
-                  <li>
-                    <span class="checkbox-input">
-                      <input id="additional-filter-parking" type="checkbox">
-                      <label for="additional-filter-parking">Koramangala</label>
-                    </span>
-                  </li> 
-                  <li>
-                    <span class="checkbox-input">
-                      <input id="additional-filter-parking" type="checkbox">
-                      <label for="additional-filter-parking">Indra Nagar</label>
-                    </span>
-                  </li> 
-                 
+                  </li>
+                  {% endfor %}                  
                 </ul>
+                {#}
                  <hr class="filter-divider">
                  <h5 class="title">Include Nearby Area</h5>
                 <ul class="custom-list additional-filter-list clearfix">
@@ -104,85 +289,59 @@
                   </li> 
                  
                 </ul>
+                {#}
                 <hr class="filter-divider">
                 <h5 class="title">Price</h5>
+                
+                {{ form_widget(filterForm.price,{
+							'attr':{'data-min':''~search.min,'data-max':''~search.max,'data-from':''~search.minPrice,'data-to':''~search.maxPrice
+							}}) }}
+                {#}
                 <div class="slider-range-container box-row">
-                  <div class="slider-range" data-min="2000" data-max="100000" data-step="2000" data-default-min="2000" data-default-max="50000" data-currency="$">
+                {% set c = "<i class='fa fa-inr'></i>" %}
+                  <div class="slider-range" data-min="{{ search.minPrice+200 }}" data-max="{{ search.maxPrice }}" data-step="200" data-default-min="{{ search.minPrice }}" data-default-max="{{ search.maxPrice }}" data-currency="Rs">
                   </div>
                   <div class="clearfix">
-                    <input type="text" class="range-from" value="$2000">
-                    <input type="text" class="range-to" value="$50000">
+                    <input type="text" class="range-from" value="{{ search.minPrice+200 }}">
+                    <input type="text" class="range-to" value="{{ search.maxPrice }}">
                   </div>
                 </div>
+                {#}
+                {#}
                  <hr class="filter-divider">
                 <h5 class="title">Amenities</h5>
                 <ul class="custom-list additional-filter-list clearfix">
+                
+                {% for key, item in filterForm.amenities.children %}			
                   <li>
                     <span class="checkbox-input">
-                      <input id="additional-filter-ac"  type="checkbox">
-                      <label for="additional-filter-ac">AC</label>
+                     
+                      {{ form_widget(item) }}
+                      {{ form_label(item) }}
                     </span>
-                  </li> 
-                  <li>
-                    <span class="checkbox-input">
-                      <input id="additional-filter-hotbath"  type="checkbox">
-                      <label for="additional-filter-hotbath">Hotbath</label>
-                    </span>
-                  </li> 
-                  <li>
-                    <span class="checkbox-input">
-                      <input id="additional-filter-parking" type="checkbox">
-                      <label for="additional-filter-parking">Parking</label>
-                    </span>
-                  </li> 
-                  <li>
-                    <span class="checkbox-input">
-                      <input id="additional-filter-room-service" type="checkbox">
-                      <label for="additional-filter-room-service">Room Service</label>
-                    </span>
-                  </li> 
-                  <li>
-                    <span class="checkbox-input">
-                      <input id="additional-filter-safe"  type="checkbox">
-                      <label for="additional-filter-safe">Safe</label>
-                    </span>
-                  </li> 
-                  <li>
-                    <span class="checkbox-input">
-                      <input id="additional-filter-tv"  type="checkbox">
-                      <label for="additional-filter-tv">TV</label>
-                    </span>
-                  </li> 
-                  <li>
-                    <span class="checkbox-input active">
-                      <input id="additional-filter-wifi"  type="checkbox">
-                      <label for="additional-filter-wifi">Wifi</label>
-                    </span>
-                  </li> 
+                  </li>
+                  {% endfor %}                  
+                  
                 </ul>
+                {#}
                  <hr class="filter-divider">
                 <h5 class="title">Category</h5>
                 <ul class="custom-list additional-filter-list clearfix">
+                
+                 {% for key, item in filterForm.categories.children %}			
                   <li>
                     <span class="checkbox-input">
-                      <input id="additional-filter-ac"  type="checkbox">
-                      <label for="additional-filter-ac">5 Star</label>
+                     
+                      {{ form_widget(item) }}
+                      {{ form_label(item) }}
                     </span>
-                  </li> 
-                  <li>
-                    <span class="checkbox-input">
-                      <input id="additional-filter-hotbath"  type="checkbox">
-                      <label for="additional-filter-hotbath">3 Star</label>
-                    </span>
-                  </li> 
-                  <li>
-                    <span class="checkbox-input">
-                      <input id="additional-filter-parking" type="checkbox">
-                      <label for="additional-filter-parking">2 Star</label>
-                    </span>
-                  </li> 
+                  </li>
+                  {% endfor %} 
                  
                 </ul>
+                
+                
+                
               </div>
 {#               <div class="buttons">#}
 {#                 <button class="btn btn-transparent-gray pull-left">#}

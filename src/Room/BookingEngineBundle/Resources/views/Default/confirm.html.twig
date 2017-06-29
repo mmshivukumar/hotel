@@ -1,11 +1,11 @@
 {% extends 'page.html.twig' %}
 
-{# {% block breadcrumbsTitle %}Booking{% endblock %}#}
+{% block breadcrumbsTitle %}Booking{% endblock %}
 
-{# {% block breadcrumbsLinks %}#}
-{#             <li><a href="{{ path('room_booking_engine_homepage') }}">Home</a></li>#}
-{#             <li><a href="#">Booking</a></li>#}
-{# {% endblock %}#}
+{% block breadcrumbsLinks %}
+            <li><a href="{{ path('room_booking_engine_homepage') }}">Home</a></li>
+            <li><a href="#">Booking</a></li>
+{% endblock %}
 
 {% block stylesheets %}
 <style>
@@ -322,7 +322,7 @@ text-transform: capitalize;
 											</div>
 											</div>
 											<div class="col-sm-6">
-												<p class="pax-details ">{{ search.numAdult }} Adult in 1 Room </p>
+												<p class="pax-details ">{{ search.numAdult }} Adult in {{ search.numRooms }} Room </p>
 												<div class="col-sm-12 font-13 address">
 												{% set address = hotel.address %}
 													<h6 class="font-13">Address :</h6>

@@ -89,16 +89,25 @@ class SearchType extends AbstractType
             ->add('numAdult','hidden',array(            						
             						'required'    => true,
             						'label' => 'No of Adult',
-                                    'data'=>'1',
+                                   // 'data'=>'2',
             						'attr'   =>  array(
                                             'placeholder'=>'Number of Adult'
             						),
             		            
             				))
+            ->add('numRooms','hidden',array(
+            						'required'    => true,
+            						'label' => 'No of Adult',
+            						//'data'=>'1',
+            						'attr'   =>  array(
+            								'placeholder'=>'Number of Adult'
+            						),
+            				
+            				))
             ->add('numChildren','hidden',array(
             						'required'    => true,
             						'label' => 'No of Children',
-            						'data'=>'1',
+            						'data'=>'0',
             						'attr'   =>  array(
             								'placeholder'=>'Number of Children'
             						),

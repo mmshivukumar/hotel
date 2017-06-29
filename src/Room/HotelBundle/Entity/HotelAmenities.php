@@ -61,19 +61,19 @@ class HotelAmenities
 	
 	/**
 	 *
-	 * @return the string
+	 * @return the boolean
 	 */
-	public function getImagePath() {
-		return $this->imagePath;
+	public function getAmenity() {
+		return $this->amenity;
 	}
 	
 	/**
 	 *
 	 * @param
-	 *        	$imagePath
+	 *        	$amenity
 	 */
-	public function setImagePath($imagePath) {
-		$this->imagePath = $imagePath;
+	public function setAmenity($amenity) {
+		$this->amenity = $amenity;
 		return $this;
 	}
 	
@@ -111,6 +111,9 @@ class HotelAmenities
 		$this->hotel = $hotel;
 		return $this;
 	}
+	
+	
+	
 	
 	
 	

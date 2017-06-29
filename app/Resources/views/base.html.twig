@@ -11,7 +11,7 @@
   <!-- Stylesheets -->
    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link href="{{ asset('css/jquery-ui.min.css') }}" rel="stylesheet">
-  <link rel="stylesheet" href="{{ asset('css/style.css?version=0.03') }}">
+  <link rel="stylesheet" href="{{ asset('css/style.css?version=0.05') }}">
   <link rel="stylesheet" href="{{ asset('css/owl.carousel.css') }}">
 
   <!-- Google Font -->
@@ -97,6 +97,13 @@
                   <li class="active"><a href="{{ path('room_booking_engine_homepage') }}">Hotels</a></li>                                                     
                   <li><a href="{{ path('room_site_management_about_us') }}">Service Apartments</a></li>
                   <li><a href="#">Hot Deals</a></li>                
+                   {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin</a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="{{ path('room_site_management_booking_search') }}">Bookings</a></li>                                                                                       
+                                        </ul>
+                                    </li>
+                   {% endif %}
                   <li><a href="{{ path('room_site_management_contact_us') }}">Contact</a></li>
                    
                 </ul>

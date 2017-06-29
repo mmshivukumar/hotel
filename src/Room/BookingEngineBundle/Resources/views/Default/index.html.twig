@@ -2,9 +2,87 @@
 
 {% block javascripts %}
 <script>
-    $(document).ready(function() {
-    	// $('[data-toggle="popover"]').popover(); 
-$('#guests').click(function(e){	
+var room = $('.guests-room').html();
+$("#guests-box").on('click','.add-room',function(e){
+	e.preventDefault();    	
+    	//alert(room);
+    	var roomCount = parseInt($(this).attr('value'));
+    	var adultCount = parseInt($('#hotel_search_numAdult').val());
+    	
+    	roomCount+=1;    	
+    	$(this).attr('value',roomCount);
+    	$('.guests-room').append("<h5>Room "+roomCount+"</h5>");
+    	$('.guests-room').append(room);
+    	$('#hotel_search_numRooms').val(roomCount);
+    	$('#hotel_search_numAdult').val(adultCount+2);
+    	 var totalAdultCount = parseInt($('#hotel_search_numAdult').val());
+    	 var totalChildCount = parseInt($('#hotel_search_numChildren').val());
+    	var guests = totalAdultCount + totalChildCount;
+    	var guestsText = guests+' Guests, '+roomCount+' Rooms';
+    	$('#guests').val(guestsText);
+
+    	e.preventDefault();
+   	
+});
+$("#guests-box").on('click','.adults',function(e){	
+	e.preventDefault(); //STOP default action 
+	 var id = $(this).attr('id');
+	 var value = parseInt($(this).attr('value'));
+	// var value = 3;
+	 var totalAdultCount = parseInt($('#hotel_search_numAdult').val());
+	 var totalChildCount = parseInt($('#hotel_search_numChildren').val());
+	 var roomCount = parseInt($('#hotel_search_numRooms').val());
+	 var adultsCount = $(this).closest('.row').find('.adults-count');
+	 var adults =parseInt( $(adultsCount).html());
+	 if (isNaN(adults)) { 
+		 adults= 0
+        } 
+	// alert(adults);
+	 if(id=='decrement'){
+		 adults-=1;
+		 totalAdultCount-=1;
+		 if(adults>=value) $(adultsCount).html(adults); else exit();
+	  }else{
+		adults+=1;
+		totalAdultCount+=1;
+	    if(adults<=20)  $(adultsCount).html(adults); else exit();
+		}
+	 $('#hotel_search_numAdult').val(totalAdultCount);
+	 var guests = totalAdultCount + totalChildCount;
+ 	var guestsText = guests+' Guests, '+roomCount+' Rooms';
+ 	$('#guests').val(guestsText);	
+});
+$("#guests-box").on('click','.children',function(e){	
+	e.preventDefault(); //STOP default action 
+	 var id = $(this).attr('id');
+	 var value = parseInt($(this).attr('value'));
+	 var totalAdultCount = parseInt($('#hotel_search_numAdult').val());
+	 var totalChildCount = parseInt($('#hotel_search_numChildren').val());
+	 var childrenCount = $(this).closest('.row').find('.children-count');
+	 var roomCount = parseInt($('#hotel_search_numRooms').val());
+	 var children =parseInt( $(childrenCount).html());
+	 if (isNaN(children)) { 
+		 children= 0
+        } 
+	 if(id=='decrement'){
+		 children-=1;
+		 totalChildCount-=1;
+		 if(children>=value) $(childrenCount).html(children); else exit();
+	  }else{
+		  children+=1;
+		  totalChildCount+=1;
+	    if(children<=20)  $(childrenCount).html(children); else exit();
+		}
+	 $('#hotel_search_numChildren').val(totalChildCount);
+	 var guests = totalAdultCount + totalChildCount;
+ 	var guestsText = guests+' Guests, '+roomCount+' Rooms';
+ 	$('#guests').val(guestsText);
+});
+
+
+$('#guests').click(function(e){
+	//var room = $('#guests-room').html();
+	//$('#guests-room').next(room);
 	e.preventDefault();
     	 $('#guests').popover({
     		    placement: "bottom",
@@ -12,52 +90,16 @@ $('#guests').click(function(e){
     		    html : true,
     		    content: $("#popover-content").html()
     		}).popover("show");
-});
 
-$(".guests").on('click','#add-room',function(){
-	e.preventDefault();
-    	var room = $('#guests-room').html();
-    //	$('#guests-room').next(room);
-});
-        $('.adults').click(function(e){		
-			e.preventDefault(); //STOP default action 
-			 var id = $(this).attr('id');
-			 var value = parseInt($(this).attr('value'));
-			 var adults =parseInt( $('.adults-count').val());
-			 if (isNaN(adults)) { 
-				 adults= 0
-	            } 
-			 if(id=='decrement'){
-				 adults-=1;
-				 if(adults>=value) $('.adults-count').val(adults); else exit();
-			  }else{
-				adults+=1;
-			    if(adults<=20)  $('.adults-count').val(adults); else exit();
-				}	
-	    });
-        $('.children').click(function(e){		
-			e.preventDefault(); //STOP default action 
-			 var id = $(this).attr('id');
-			 var value = parseInt($(this).attr('value'));
-			 var adults =parseInt( $('#hotel_search_numChildren').val());
-			 if (isNaN(adults)) { 
-				 adults= 0
-	            } 
-			 if(id=='decrement'){
-				 adults-=1;
-				 if(adults>=value) $('#hotel_search_numChildren').val(adults); else exit();
-			  }else{
-				adults+=1;
-			    if(adults<=20)  $('#hotel_search_numChildren').val(adults); else exit();
-				}
-	    });
+
+        
     });
     </script>
 {% endblock %}
 {% block body %}
 
 <!-- Start Banner -->
-  <section id="banner">
+  <section id="banner" class="home-page">
      <div class="banner-bg">
       <div class="banner-bg-item"><img src="{{ asset('img/banner3.jpg') }}" alt=""></div>
      
@@ -79,6 +121,7 @@ $(".guests").on('click','#add-room',function(){
 
                   <!-- Start Hotel -->
                   <li class="tab-content active row">
+                  <div id="search-form">
                     {{ form_start(form) }}
                      <span class="city select-box">
                         {{ form_widget(form.city) }}
@@ -93,17 +136,19 @@ $(".guests").on('click','#add-room',function(){
                          {{ form_widget(form.checkOut) }}
                         <i class="fa fa-calendar"></i>
                       </span>
-                      <span class="city guests">
-                      <input type="text" id="guests" value="2 Guests, 1 Room" readonly/>
-                      <div id="popover-content" style="display: none;">
-                      <div id="guests-room">
-                      	<h5>Room1</h5>
+                      <span class="city guests" id="guests-box">
+                      <input type="text" id="guests" value="{{ search.numAdult }} Guests, {{ search.numRooms }} Room" readonly/>
+                      <div id="popover-content" style="display: none">
+                      
+                      	<h5>Room 1</h5>
+                      	
+                      	<div class="guests-room">
                       	<div class="row">
                       		<div class="col-lg-8">
                       			<i class="adults-count">2</i> Adults <i class="guests-text">Above 12 years</i>
                       		</div>
                       		<div class="col-lg-4">
-                      			<a class="adults input-group-addon" id="decrement" value="1" href="#">-</a>
+                      			<a class="adults input-group-addon" id="decrement" value="2" href="#">-</a>
                       			<a class="adults input-group-addon" id="increment" href="#">+</a>
                       		</div>                     	
                       	</div>
@@ -113,21 +158,24 @@ $(".guests").on('click','#add-room',function(){
                       			<i class="children-count">0</i> Children <i class="guests-text">Bellow 12 years</i>
                       		</div>
                       		<div class="col-lg-4">
-                      			<a class="children input-group-addon" id="decrement" value="1" href="#">-</a>
+                      			<a class="children input-group-addon" id="decrement" value="0" href="#">-</a>
                       			<a class="children input-group-addon" id="increment" href="#">+</a>
                       		</div>                     	
                       	</div> 
                       	<hr> 
                       	</div>
-                      	<a href="#" id="add-room">Add Room</a>                      	                      	
+                      	<a href="#" class="add-room" value="1">Add Room</a>                      	                      	
                       </div>
+                    
                       
                       {#}
                         <select name="guests"  data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">
                         	<option>2 Guests, 1 Room </option>
                         
                         </select>
+                        
                         {#}
+                       
                       </span>
                       {#}
                       <span class="adults group-box">
@@ -146,12 +194,16 @@ $(".guests").on('click','#add-room',function(){
                       </span>
                       {#}
                       <span class="submit-btn">
+                      	 {{ form_widget(form.numAdult) }}
+                      	  {{ form_widget(form.numChildren) }}
+                      	   {{ form_widget(form.numRooms) }}
                         <button class="btn btn-transparent">Search</button>                       
                       </span>
                      {{ form_end(form) }}
+                     </div>
                   </li>
                   <!-- End Hotel -->
-
+				
                  
 
                 </ul>

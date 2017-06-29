@@ -4,3 +4,6 @@ room_site_management_about_us:
 room_site_management_contact_us:
     path:     /contact-us
     defaults: { _controller: RoomSiteManagementBundle:SiteManagement:contact }
+room_site_management_booking_search:
+    path:     /booking-search
+    defaults: { _controller: RoomSiteManagementBundle:SiteManagement:bookingSearch }

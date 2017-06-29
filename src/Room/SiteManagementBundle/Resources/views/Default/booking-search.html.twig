@@ -1,0 +1,137 @@
+{% extends 'page.html.twig' %}
+
+{% block breadcrumbsTitle %}Booking Search{% endblock %}
+
+{% block breadcrumbsLinks %}
+            <li><a href="{{ path('room_booking_engine_homepage') }}">Home</a></li>
+            <li><a href="{{ path('room_site_management_about_us') }}">Booking Search</a></li>
+{% endblock %}
+
+
+{% block javascripts %}
+
+<script type="text/javascript">
+
+$('.calendar').datepicker({
+    dateFormat: dateformat,
+    minDate: 0,
+    beforeShow: function() {
+      input.addClass('active');
+    },
+    onClose: function() {
+      input.removeClass('active');
+      // TRANSPLANT WIDGET BACK TO THE END OF BODY IF NEEDED
+      widget.hide();
+      if (!widget.parent().is('body')) {
+        widget.detach().appendTo($('body'));
+      }
+    }
+  });
+
+
+</script>
+{% endblock %}
+{% block body %}
+
+  <!-- Start Team -->
+  <section class="team">
+    <div class="container">
+      <div class="row">
+      		    <div id="fullwidth" class="col-sm-12">
+                    <div class="col-lg-12">
+                    
+                    
+                       {{ form_start(form) }}
+   {{ form_errors(form) }}
+   
+	<div class="row">
+			 <div class="col-lg-3 col-sm-3">
+			<div class="row form-group {% if form.from.vars.errors|length %}has-error{% endif %}">
+                    <div class="col-lg-5">
+                            {{ form_label(form.from) }}
+                        </div>
+                        <div class="col-lg-7">
+                        	
+                            {{ form_widget(form.from) }}
+                        </div>
+                       </div>
+                      </div>
+                     
+			
+             <div class="col-lg-3 col-sm-3">
+            <div class="row form-group {% if form.to.vars.errors|length %}has-error{% endif %}">
+                    <div class="col-lg-5">
+                            {{ form_label(form.to) }}
+                        </div>
+                        <div class="col-lg-7">
+                        
+                        	{{ form_widget(form.to) }}
+                        	
+                             </div>
+                            </div>
+            </div>
+                            
+                          
+				<div class="col-lg-2 col-sm-2">
+				{{ form_widget(form.submit,{ 'attr': {'class': 'btn-system'}}) }}
+					{{ form_end(form) }}
+				</div>
+								
+			
+			</div>
+                    
+                    
+                    
+                    <table id="result" class="table table-bordered col-lg-12 col-sm-12">
+	               {% if bookings|length>0 %}	
+                          <tr class="blue">
+                                <th>Booking Id #</th>
+                                <th>Name</th>
+                                <th>Mobile</th>
+                                <th>Hotel</th>
+                                <th>Check In</th>
+                                <th>Check Out</th>
+                                <th>Booked On </th>
+                                <th>Adult </th>
+                                <th>Total Price</th>
+                                <th>Discount</th>
+                                <th>Final Price</th>
+                                <th> Amount Paid </th>
+                                <th> Status </th>
+							</tr>	
+					{% endif %}			
+						
+                     {% for booking in bookings if bookings|length>0 %}
+                       {% if booking.customerId %}
+                        {% set customer =customers[booking.customerId] %}
+                        <tr>
+                            <td>{{ booking.bookingId }}</td> 
+                            <td>{{ customer.name }}</td>
+                            <td>{{ customer.mobile }}</td>
+                            <td>{{ booking.hotelName }}</td>
+                            <td>{{ booking.chekIn|date('d/m/Y') }}</td>
+                            <td>{{ booking.chekOut|date('d/m/Y') }}</td>
+                            <td>{{ booking.bookedOn|date('d/m/Y') }}</td>
+                            <td>{{ booking.numAdult }}</td>
+                            <td>{{ booking.totalPrice }}</td>
+                            <td>{{ booking.discount }}</td>
+                            <td>{{ booking.finalPrice }}</td>
+                            <td>{{ booking.amountPaid }}</td>
+                            <td>{{ booking.status }}</td>
+                        
+                        </tr>
+                        
+                        {% endif %}
+                    {% endfor %}
+                        </table>
+                    </div>
+                </div>
+      </div>
+     </div>
+  </section>
+
+
+
+ 
+
+{% endblock %}

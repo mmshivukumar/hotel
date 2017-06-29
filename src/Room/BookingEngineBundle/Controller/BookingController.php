@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Room\BookingEngineBundle\Form\SearchType;
+use Room\BookingEngineBundle\Form\FilterType;
 use Room\BookingEngineBundle\Form\CustomerType;
 use Room\BookingEngineBundle\DTO\Search;
 use Room\BookingEngineBundle\Entity\Customer;
@@ -29,15 +30,42 @@ class BookingController extends Controller
 		return $form;
 	}
 	/**
+	 *
+	 * @param Search $entity
+	 * @return unknown
+	 */
+	private function createFilterForm(Search $dto,$filters){
+		$form = $this->createForm(new FilterType($filters), $dto, array(
+				'action' => $this->generateUrl('room_booking_engine_filter'),
+				'method' => 'GET',
+		));
+			
+		return $form;
+	}
+	/**
 	 * 
 	 */
 	public function indexAction()
 	{
 		$search = new Search();
+		$search->setNumAdult(2);
+		$search->setNumRooms(1);
 		$form   = $this->createSearchForm($search);
 		return $this->render('RoomBookingEngineBundle:Default:index.html.twig', array(
-                'form'   => $form->createView(),               
+                'form'   => $form->createView(),
+				'search'=>$search               
             ));
+	}
+	/**
+	 * 
+	 */
+	public function addRoomAction(Request $request){
+		
+		$room = new Room;
+		return $this->render('RoomBookingEngineBundle:Default:index.html.twig', array(
+				'form'   => $form->createView(),
+				'search'=>$search
+		));
 	}
 	/**
 	 * 
@@ -51,14 +79,61 @@ class BookingController extends Controller
     	$form->handleRequest($request);
     	$catalogueService = $this->container->get( 'catalogue.service' );
     	$hotels = $catalogueService->getHotelsByCity($search->getCity());
+    	$amenities = $catalogueService->getAmenities();
+    	$filters = $catalogueService->getFilters($hotels,$amenities);
+    	$search->setMinPrice($filters['price']['minPrice']);
+    	$search->setMaxPrice($filters['price']['maxPrice']);
+    	$search->setMin($filters['price']['minPrice']);
+    	$search->setMax($filters['price']['maxPrice']);
     	$session = $request->getSession();
     	$session->set('search',$search);
+    	$session->set('hotels',$hotels);
+    	$session->set('filters',$filters);
+    	
+    	$filterForm   = $this->createFilterForm($search,$filters);
     		   		
     	return $this->render('RoomBookingEngineBundle:Default:search.html.twig', array(
-                'form'   => $form->createView(),               
+                'form'   => $form->createView(),     
+    			'filterForm'   => $filterForm->createView(),
     			'hotels'=>$hotels,
+    			'search'=>$search
          ));
             
+    }
+    /**
+     *
+     * @param Request $request
+     */
+    public function filterAction(Request $request)
+    {
+    	$session = $request->getSession();
+    	$hotels = array();
+    	$search = $session->get('search');
+    	$form   = $this->createSearchForm($search);
+    	
+    	$hotels = $session->get('hotels');
+    	$filters = $session->get('filters');
+
+    	$filterForm   = $this->createFilterForm($search,$filters);   	
+    	$filterForm->handleRequest($request);
+    	
+    	$price = $search->getPrice();
+    	$minMaxPrice = explode ( ";", $price );
+    	$minPrice = ( float ) $minMaxPrice [0];
+    	$maxPrice = ( float ) $minMaxPrice [1];
+    	$search->setMinPrice($minPrice);
+    	$search->setMaxPrice($maxPrice);
+    	
+    	$catalogueService = $this->container->get( 'catalogue.service' );
+    	$hotels = $catalogueService->filterHotels($search,$hotels,$minPrice,$maxPrice);
+    		
+    	return $this->render('RoomBookingEngineBundle:Default:search.html.twig', array(
+    			'form'   => $form->createView(),
+    			'filterForm'   => $filterForm->createView(),
+    			'hotels'=>$hotels,
+    			'search'=>$search,
+    	));
+    
     }
     /**
      * 
@@ -135,6 +210,7 @@ class BookingController extends Controller
     	$form   = $this->createBookingForm($customer);
     	$em = $this->getDoctrine()->getManager();
     	$hotel = $em->getRepository('RoomHotelBundle:Hotel')->find($id);
+    	$session->set('selected',$hotel);
     	$booking = new Booking();
     	$price = $hotel->getPrice();
     	$tax = $price*0.14;
@@ -153,10 +229,10 @@ class BookingController extends Controller
     public function bookingSubmitAction(Request $request)
     {
     
-    	return $this->redirect ( $this->generateUrl ( "room_booking_engine_success" ) );
+    	//return $this->redirect ( $this->generateUrl ( "room_booking_engine_success" ) );
     	$session = $request->getSession();
     	$resultSet = $session->get('resultSet');
-    	$searchFilter = $session->get('selectedData');
+    	$searchFilter = $session->get('search');
     	$selectedService = $session->get('selected');
     
     
@@ -171,7 +247,7 @@ class BookingController extends Controller
     		$em->flush();
     		$session->set('customer',$customer);
 
-    		$price = $selectedService['price'];
+    		$price = $selectedService->getPrice();
     		$finalPrice = $price;
     		
     		$booking = new Booking();
@@ -179,11 +255,20 @@ class BookingController extends Controller
     		$booking->setBookingId($this->getBookingId());
     		$booking->setTotalPrice($price);
     		$booking->setFinalPrice($finalPrice);
-    		$booking->setStatus('pending');
+    		$booking->setStatus('booked');
     		$booking->setJobStatus('Open');
     		$booking->setBookedOn(new \DateTime());
     		//$booking->setNumDays($searchFilter->getNumDays());
     		$booking->setNumAdult($searchFilter->getNumAdult());
+    		$booking->setChekIn($searchFilter->getCheckIn());
+    		$booking->setChekOut($searchFilter->getCheckOut());
+    		
+    		
+    		$address = $selectedService->getAddress();
+    		$booking->setHotelId($selectedService->getId());
+    		$booking->setHotelName($selectedService->getName());
+    		$booking->setLocation($address->getLocation());
+    		$booking->setNumRooms(0);
 
     		$amountToPay = $finalPrice;
     		$tax = 0;
@@ -194,11 +279,12 @@ class BookingController extends Controller
     		$totalTax = $serviceTax+$swachBharthCess+$krishiKalyanCess;
     		$amountToPay = $amountToPay+$totalTax;
     		$finalPrice = $finalPrice+$totalTax;
-    		$booking->setTax($tax);
+    		//$booking->setTax($tax);
     		$booking->setServiceTax($serviceTax);
     		$booking->setSwachBharthCess($swachBharthCess);
     		$booking->setKrishiKalyanCess($krishiKalyanCess);
     		$booking->setFinalPrice($finalPrice);
+    		$booking->setCouponApplyed(0);
     		$em->persist($booking);
     		$em->flush();
     		$session->set('bookingObj',$booking);
@@ -206,6 +292,9 @@ class BookingController extends Controller
     		$paymentLink = $this->getPaymentLink($amountToPay);
     		//$paymentLink = "https://www.instamojo.com/Waseemsyed/tirupati-caars-services-cb8a4/";
     		$paymentLink.="?data_name=".$customer->getName()."&data_email=".$customer->getEmail()."&data_phone=".$customer->getMobile()."&embed=form";
+    		
+    		return $this->redirect ( $this->generateUrl ( "room_booking_engine_success" ) );
+    		
     		return $this->render('RoomBookingEngineBundle:Default:payment.html.twig', array(
     				'customer'   => $customer,
     				'booking'   => $booking,
@@ -221,6 +310,10 @@ class BookingController extends Controller
     	));
     
     }
+    
+    public function getPaymentLink($amountToPay){
+    	return '';
+    }
     /**
      *
      */
@@ -231,7 +324,7 @@ class BookingController extends Controller
     }
     private function getBookingId(){
     	$characters = 'A5B0CD9EFG1HIJ3KLM46NOPQR7STUV8WXYZ';
-    	$bookingId = 'JT';
+    	$bookingId = 'SH';
     	date_default_timezone_set('Asia/Kolkata');
     	$current=date('d/m/Y');
     	list ( $d, $m, $y ) = explode ( '/', $current );

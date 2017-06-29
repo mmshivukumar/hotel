@@ -103,7 +103,7 @@ class Hotel
     protected $images;
     /**
      * @var Collection
-     * @ORM\OneToMany(targetEntity="Room\HotelBundle\Entity\HotelImage", mappedBy="hotel", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Room\HotelBundle\Entity\HotelAmenities", mappedBy="hotel", cascade={"persist"})
      */
     protected $amenities;
     public function __construct() {
