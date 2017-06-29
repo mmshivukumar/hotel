@@ -1,6 +1,6 @@
 <?php
 
-namespace Room\HotelBundle\Entity;
+namespace Room\HotelBundle\DTO;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -8,119 +8,137 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Hotel
  *
- * @ORM\Table(name="hotel")
- * @ORM\Entity
+ *
+ * 
  */
-class Hotel
+class HotelDto
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=100)
      */
     private $name;
     /**
      * @var string
      *
-     * @ORM\Column(name="overview", type="string", length=3000)
+     * 
      */
     private $overview;
     /**
      * @var string
      *
-     * @ORM\Column(name="property_type", type="string", length=50)
+     * 
      */
     private $propertyType;
     /**
      * @var integer
      *
-     * @ORM\Column(name="category", type="integer")
+     * 
      */
     private $category;
     /**
      * @var string
      *
-     * @ORM\Column(name="check_in", type="string", length=100)
+     * 
      */
     private $checkIn;
     /**
      * @var string
      *
-     * @ORM\Column(name="check_out", type="string", length=100)
+     * 
      */
     private $checkOut;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="price", type="float")
+     *
      */
     private $price;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="city", type="string", length=100)
+     * 
      */
     private $city;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="num_rooms", type="integer")
+     * 
      */
     private $numRooms;
-    
     /**
      * @var boolean
      *
-     * @ORM\Column(name="sold_out", type="boolean")
+     *
      */
     private $soldOut;
-    
     /**
      * @var integer
      *
-     * @ORM\Column(name="priority", type="integer")
+     *
      */
     private $priority;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="city_id", type="integer")
+     * 
      */
     private $cityId;
     /**
      * @var boolean
      *
-     * @ORM\Column(name="active", type="boolean")
+     * 
      */
     private $active;
+    
     /**
-     * @var Collection
-     * @ORM\OneToOne(targetEntity="Room\HotelBundle\Entity\HotelAddress", mappedBy="hotel", cascade={"persist"})
+     * @var string
+     *
+     * 
      */
-    protected $address;
+    private $addressLine1;
+    
+    /**
+     * @var string
+     *
+     * 
+     */
+    private $addressLine2;
+    
+    /**
+     * @var string
+     *
+     * 
+     */
+    private $location;
+    
+    /**
+     * @var string
+     *
+     *
+     */
+    private $pincode;
+    
     /**
      * @var Collection
-     * @ORM\OneToMany(targetEntity="Room\HotelBundle\Entity\HotelImage", mappedBy="hotel", cascade={"persist"})
+     * 
      */
     protected $images;
     /**
      * @var Collection
-     * @ORM\OneToMany(targetEntity="Room\HotelBundle\Entity\HotelAmenities", mappedBy="hotel", cascade={"persist"})
+     * 
      */
     protected $amenities;
+    
     public function __construct() {
     	$this->images = new ArrayCollection();
     	$this->amenities = new ArrayCollection();
@@ -344,21 +362,76 @@ class Hotel
 	
 	/**
 	 *
-	 * @return the Collection
+	 * @return the string
 	 */
-	public function getAddress() {
-		return $this->address;
+	public function getAddressLine1() {
+		return $this->addressLine1;
 	}
 	
 	/**
 	 *
 	 * @param
-	 *        	$address
+	 *        	$addressLine1
 	 */
-	public function setAddress($address) {
-		$this->address = $address;
+	public function setAddressLine1($addressLine1) {
+		$this->addressLine1 = $addressLine1;
 		return $this;
 	}
+	
+	/**
+	 *
+	 * @return the string
+	 */
+	public function getAddressLine2() {
+		return $this->addressLine2;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$addressLine2
+	 */
+	public function setAddressLine2($addressLine2) {
+		$this->addressLine2 = $addressLine2;
+		return $this;
+	}
+	
+	/**
+	 *
+	 * @return the string
+	 */
+	public function getLocation() {
+		return $this->location;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$location
+	 */
+	public function setLocation($location) {
+		$this->location = $location;
+		return $this;
+	}
+	
+	/**
+	 *
+	 * @return the string
+	 */
+	public function getPincode() {
+		return $this->pincode;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$pincode
+	 */
+	public function setPincode($pincode) {
+		$this->pincode = $pincode;
+		return $this;
+	}
+	
 	
 	/**
 	 *
@@ -434,8 +507,7 @@ class Hotel
 	
 	
 	
-	
-    
+	   
 
     
 }

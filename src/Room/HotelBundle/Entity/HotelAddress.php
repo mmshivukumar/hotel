@@ -4,6 +4,7 @@ namespace Room\HotelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * HotelAddress
  *
@@ -41,6 +42,13 @@ class HotelAddress
      * @ORM\Column(name="location", type="string", length=100)
      */
     private $location;
+    
+   /**
+     * @var string
+     *
+     * @ORM\Column(name="pincode", type="string", length=100)
+     */
+    private $pincode;
 
     /**
      * @var string
@@ -184,5 +192,24 @@ class HotelAddress
 	public function setHotel($hotel) {
 		$this->hotel = $hotel;
 		return $this;
-	}	    
+	}
+	
+	/**
+	 *
+	 * @return the string
+	 */
+	public function getPincode() {
+		return $this->pincode;
+	}
+	
+	/**
+	 *
+	 * @param
+	 *        	$pincode
+	 */
+	public function setPincode($pincode) {
+		$this->pincode = $pincode;
+		return $this;
+	}
+		    
 }

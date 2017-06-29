@@ -1,1 +1,30 @@
-Hello {{ name }}!
+{% extends 'RoomBookingEngineBundle:Default:confirm.html.twig' %}
+
+{% block body %}
+
+{# <div class="container">#}
+{# <h1 class="page-header">Add Hotel Details</h1>#}
+{# {{ form_start(form) }}#}
+
+{# 	<div class="row">#}
+{# 	<div class="col-lg-6">#}
+{# <div class="row form-group">#}
+{#                             <div class="col-lg-6">#}
+{#                             {{ form_label(form.clientName) }}#}
+{#                             </div>#}
+{#                             <div class="col-lg-6">#}
+{#                                 {{ form_widget(form.clientName) }}#}
+{#                             </div>                       #}
+{#                         </div>#}
+{# </div>#}
+{# </div>#}
+{# {{ form_end(form) }}#}
+
+{{ form_start(form) }}
+{{ form_widget(form) }}
+
+
+{{ form_end(form) }}
+
+{# </div>#}
+{% endblock %}
