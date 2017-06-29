@@ -17,9 +17,11 @@ $(document).ready(function () {
       select = self.find('select');
     self.prepend('<ul class="select-clone custom-list"></ul>');
 
+    var selected = select.find('option:selected').text();
+    //alert();
     var placeholder = select.data('placeholder') ? select.data('placeholder') : select.find('option:eq(0)').text(),
       clone = self.find('.select-clone');
-    self.prepend('<input class="value-holder" type="text" disabled="disabled" placeholder="' + placeholder + '"><i class="fa fa-sort arrow-down"></i>');
+    self.prepend('<input class="value-holder" type="text" disabled="disabled" value="'+selected+'" placeholder="' + placeholder + '"><i class="fa fa-sort arrow-down"></i>');
     var value_holder = self.find('.value-holder');
 
     // INPUT PLACEHOLDER FIX FOR IE
@@ -46,7 +48,7 @@ $(document).ready(function () {
 
     // CLICK
     clone.find('li').click(function() {
-
+    	 $("#hotel_search_checkIn").focus();
       value_holder.val($(this).text());
       select.find('option[value="' + $(this).attr('data-value') + '"]').attr('selected', 'selected');
 
@@ -56,6 +58,7 @@ $(document).ready(function () {
       }
 
     });
+    
 
     // HIDE LIST
     self.bind('clickoutside', function(event) {
@@ -145,27 +148,55 @@ $(document).ready(function () {
       dateformat = input.data('dateformat') ? input.data('dateformat') : 'm/d/y',
       icon = $(this).find('.fa'),
       widget = input.datepicker('widget');
-
-    input.datepicker({
-      dateFormat: dateformat,
-      minDate: 0,
-      beforeShow: function() {
-        input.addClass('active');
-      },
-      onClose: function() {
-        input.removeClass('active');
-        // TRANSPLANT WIDGET BACK TO THE END OF BODY IF NEEDED
-        widget.hide();
-        if (!widget.parent().is('body')) {
-          widget.detach().appendTo($('body'));
-        }
-      }
-    });
+      
+      var id = input.attr('id');
+     if(id=='hotel_search_checkIn'){
+    	 input.datepicker({
+	      dateFormat: "dd/mm/yy",
+	      numberOfMonths: 2,
+	      minDate: 0,
+	      beforeShow: function() {
+	        input.addClass('active');
+	      },
+	      onSelect: function(t) {
+	          var a = $("#hotel_search_checkIn").datepicker("getDate");
+	          a.setDate(a.getDate() + 1);
+	          $("#hotel_search_checkOut").datepicker("option", "minDate", a);
+	          $("#hotel_search_checkOut").focus();
+	      },
+	      onClose: function() {
+	        input.removeClass('active');
+	        // TRANSPLANT WIDGET BACK TO THE END OF BODY IF NEEDED
+	        widget.hide();
+	        if (!widget.parent().is('body')) {
+	          widget.detach().appendTo($('body'));
+	        }
+	      }
+	    });
+     }else{
+    	 input.datepicker({
+    	      dateFormat: "dd/mm/yy",
+    	      numberOfMonths: 2,
+    	      minDate: 0,
+    	      beforeShow: function() {
+    	        input.addClass('active');
+    	      },
+    	      onClose: function() {
+    	        input.removeClass('active');
+    	        // TRANSPLANT WIDGET BACK TO THE END OF BODY IF NEEDED
+    	        widget.hide();
+    	        if (!widget.parent().is('body')) {
+    	          widget.detach().appendTo($('body'));
+    	        }
+    	      }
+    	    });
+     }
     icon.click(function() {
       input.focus();
     });
 
   });
+  
 
   /* -------------------------------------------------------------------------
     TOGGLE

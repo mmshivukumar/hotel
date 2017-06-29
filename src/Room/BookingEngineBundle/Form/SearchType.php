@@ -47,10 +47,9 @@ class SearchType extends AbstractType
             ->add('city', 'choice', array(
             		'expanded' => false,
             		'multiple' => false,
-                    'data'=>1,
             		'choices' => $this->getCities(),
             		'required'    => true,
-            		'empty_value'   => 'Select Origin',
+            		'empty_value'   => 'Select City, Location or Hotel Name',
                     'attr'   =>  array(
                                         'class'=>'chosen-select',
                                         'data-style'=>'btn-white',

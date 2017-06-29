@@ -4583,7 +4583,18 @@ hr {
   font-family: 'Montserrat', "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .default-form select {
-  display: none;
+	display : none;
+  background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    height: 50px;
+    color: #FFF;
+}
+.city select option{
+  background: rgba(255, 255, 255, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    height: 25px !important;
+    color: #000 !important;
+    -webkit-appearance: none;
 }
 .default-form textarea {
   padding: 15px 20px;
