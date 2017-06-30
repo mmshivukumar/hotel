@@ -8,7 +8,10 @@ $("#guests-box").on('click','.add-room',function(e){
     	//alert(room);
     	var roomCount = parseInt($(this).attr('value'));
     	var adultCount = parseInt($('#hotel_search_numAdult').val());
-    	
+    	if(roomCount==4){
+        	alert("You reached maximum rooms allowed per booking");
+        	exit();
+    	}
     	roomCount+=1;    	
     	$(this).attr('value',roomCount);
     	$('.guests-room').append("<h5>Room "+roomCount+"</h5>");
@@ -41,11 +44,11 @@ $("#guests-box").on('click','.adults',function(e){
 	 if(id=='decrement'){
 		 adults-=1;
 		 totalAdultCount-=1;
-		 if(adults>=value) $(adultsCount).html(adults); else exit();
+		 if(adults>=1) $(adultsCount).html(adults); else exit();
 	  }else{
 		adults+=1;
 		totalAdultCount+=1;
-	    if(adults<=20)  $(adultsCount).html(adults); else exit();
+	    if(adults<=2)  $(adultsCount).html(adults); else exit();
 		}
 	 $('#hotel_search_numAdult').val(totalAdultCount);
 	 var guests = totalAdultCount + totalChildCount;
@@ -67,11 +70,11 @@ $("#guests-box").on('click','.children',function(e){
 	 if(id=='decrement'){
 		 children-=1;
 		 totalChildCount-=1;
-		 if(children>=value) $(childrenCount).html(children); else exit();
+		 if(children>=0) $(childrenCount).html(children); else exit();
 	  }else{
 		  children+=1;
 		  totalChildCount+=1;
-	    if(children<=20)  $(childrenCount).html(children); else exit();
+	    if(children<=2)  $(childrenCount).html(children); else exit();
 		}
 	 $('#hotel_search_numChildren').val(totalChildCount);
 	 var guests = totalAdultCount + totalChildCount;

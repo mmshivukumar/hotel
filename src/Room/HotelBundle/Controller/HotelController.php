@@ -27,16 +27,22 @@ class HotelController extends Controller
     	
     	$em = $this->getDoctrine()->getManager();
     	$hotelDetail = new HotelDto();
-    	
-    	$form = $this->createForm(new HotelDetailType(),$hotelDetail);
+    	$catalogueService = $this->container->get( 'catalogue.service' );
+    	$form = $this->createForm(new HotelDetailType($catalogueService),$hotelDetail);
     	$form->add('submit','submit', array('label' => 'Add'));
     	$form ->handleRequest($request);
-    	
+    		
     	if($form->isValid()) {
     	
     					$hotelObj = new Hotel();
 	
 			$hotelAddressObj = new HotelAddress();
+			
+			$catalogueService = $this->container->get( 'catalogue.service' );
+			$cities = $catalogueService->getCities();
+			$cities = $catalogueService->getById($cities);
+			
+			$selectedCity = $cities[$hotelDetail->getCity()];
 	
 			$hotelObj->setName($hotelDetail->getName());
 			$hotelObj->setOverview($hotelDetail->getOverview());
@@ -45,18 +51,19 @@ class HotelController extends Controller
 			$hotelObj->setCheckIn($hotelDetail->getCheckIn());
 			$hotelObj->setCheckOut($hotelDetail->getCheckOut());
 			$hotelObj->setPrice($hotelDetail->getPrice());
-			$hotelObj->setCity($hotelDetail->getCity());
+			$hotelObj->setCity($selectedCity->getName());
 			$hotelObj->setNumRooms($hotelDetail->getNumRooms());
 			$hotelObj->setSoldOut($hotelDetail->getSoldOut());
 			$hotelObj->setPriority($hotelDetail->getPriority());
-			//$hotelObj->setCityId($hotelDetail->getCityId());
+			$hotelObj->setCityId($selectedCity->getId());
 			$hotelObj->setActive($hotelDetail->getActive());
 	
 			$hotelAddressObj->setAddressLine1($hotelDetail->getAddressLine1());
 			$hotelAddressObj->setAddressLine2($hotelDetail->getAddressLine2());
 			$hotelAddressObj->setLocation($hotelDetail->getLocation());
 			$hotelAddressObj->setPincode($hotelDetail->getPincode());
-			$hotelAddressObj->setCity($hotelDetail->getCity());
+			$hotelAddressObj->setCity($selectedCity->getName());
+			$hotelAddressObj->setCityId($selectedCity->getId());
 	
 	
 			$hotelObj->setAddress($hotelAddressObj);
@@ -121,6 +128,8 @@ class HotelController extends Controller
 		$hotelObj = $em->getRepository('RoomHotelBundle:Hotel')->find($id);
 		$hotelDetail = new HotelDto();
 		
+		$catalogueService = $this->container->get( 'catalogue.service' );
+		
 		
 		$hotelDetail->setName($hotelObj->getName());
 		$hotelDetail->setOverview($hotelObj->getOverview());
@@ -129,7 +138,7 @@ class HotelController extends Controller
 		$hotelDetail->setCheckIn($hotelObj->getCheckIn());
 		$hotelDetail->setCheckOut($hotelObj->getCheckOut());
 		$hotelDetail->setPrice($hotelObj->getPrice());
-		$hotelDetail->setCity($hotelObj->getCity());
+		$hotelDetail->setCity($hotelObj->getCityId());
 		$hotelDetail->setNumRooms($hotelObj->getNumRooms());
 		$hotelDetail->setSoldOut($hotelObj->getSoldOut());
 		$hotelDetail->setPriority($hotelObj->getPriority());
@@ -144,12 +153,17 @@ class HotelController extends Controller
 		$hotelDetail->setPincode($hotelAddressObj->getPincode());
 		
 		 
-		$form = $this->createForm(new HotelDetailType(),$hotelDetail);
+		$form = $this->createForm(new HotelDetailType($catalogueService),$hotelDetail);
 		$form->add('submit','submit', array('label' => 'Add'));
 		$form ->handleRequest($request);
 		 
 		if($form->isValid()) {
 			 
+			
+			$cities = $catalogueService->getCities();
+			$cities = $catalogueService->getById($cities);
+				
+			$selectedCity = $cities[$hotelDetail->getCity()];
 	
 			$hotelObj->setName($hotelDetail->getName());
 			$hotelObj->setOverview($hotelDetail->getOverview());
@@ -158,18 +172,19 @@ class HotelController extends Controller
 			$hotelObj->setCheckIn($hotelDetail->getCheckIn());
 			$hotelObj->setCheckOut($hotelDetail->getCheckOut());
 			$hotelObj->setPrice($hotelDetail->getPrice());
-			$hotelObj->setCity($hotelDetail->getCity());
+			$hotelObj->setCity($selectedCity->getName());
 			$hotelObj->setNumRooms($hotelDetail->getNumRooms());
 			$hotelObj->setSoldOut($hotelDetail->getSoldOut());
 			$hotelObj->setPriority($hotelDetail->getPriority());
-			//$hotelObj->setCityId($hotelDetail->getCityId());
+			$hotelObj->setCityId($selectedCity->getId());
 			$hotelObj->setActive($hotelDetail->getActive());
 	
 			$hotelAddressObj->setAddressLine1($hotelDetail->getAddressLine1());
 			$hotelAddressObj->setAddressLine2($hotelDetail->getAddressLine2());
 			$hotelAddressObj->setLocation($hotelDetail->getLocation());
 			$hotelAddressObj->setPincode($hotelDetail->getPincode());
-			$hotelAddressObj->setCity($hotelDetail->getCity());
+				$hotelAddressObj->setCity($selectedCity->getName());
+			$hotelAddressObj->setCityId($selectedCity->getId());
 	
 	
 			$hotelObj->setAddress($hotelAddressObj);

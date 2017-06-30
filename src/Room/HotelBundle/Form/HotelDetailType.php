@@ -5,6 +5,10 @@ namespace Room\HotelBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\Event\DataEvent;
+
 
 class HotelDetailType extends AbstractType
 {
@@ -12,6 +16,29 @@ class HotelDetailType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array $options
      */
+	
+	private $hotelService;
+	
+	public function __construct($hotelService)
+	{
+		$this->hotelService= $hotelService;
+	}
+	
+	/**
+	 * @param OptionsResolverInterface $resolver
+	 */
+	private function getCities()
+	{
+		$cities = $this->hotelService->getCities();
+		$tempCities = array();
+		foreach ($cities as $city){
+			if($city->getActive()){
+				$tempCities[$city->getId()] = $city->getName();
+			}
+		}
+		return $tempCities;
+	}
+	
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -78,7 +105,23 @@ class HotelDetailType extends AbstractType
             ))
             ->add('addressLine1')
             ->add('addressLine2')
-            ->add('city')
+            //->add('city')
+            ->add('city', 'choice', array(
+            		'expanded' => false,
+            		'multiple' => false,
+            		'label' => 'City',
+            		'empty_value'   => 'Select',
+            		'choices' =>$this->getCities(),
+            		'required'    => true,
+            ))
+//             ->add('location', 'choice', array(
+//             		'expanded' => false,
+//             		'multiple' => false,
+//             		'label' => 'Location',
+//             		'empty_value'   => 'Select',
+//             		//	'choices' => $this->getLocations(),
+//             		'required'    => true,
+//             ))
             ->add('location')
             ->add('pincode')
            

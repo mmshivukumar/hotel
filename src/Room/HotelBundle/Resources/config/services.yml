@@ -2,3 +2,7 @@ services:
 #    room_hotel.example:
 #        class: Room\HotelBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+
+    hotel.services:
+        class: Room\HotelBundle\Service\HotelServices
+        arguments: ["@doctrine.orm.entity_manager",'@service_container', '@session']
